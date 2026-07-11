@@ -1,4 +1,22 @@
 (() => {
+  if (!document.querySelector('link[href="brand-tokens.css"]')) {
+    const brandTokens = document.createElement('link');
+    brandTokens.rel = 'stylesheet';
+    brandTokens.href = 'brand-tokens.css';
+    document.head.insertBefore(brandTokens, document.querySelector('link[href="styles.css"]') || null);
+  }
+
+  const brand = document.querySelector('.site-header .brand');
+  if (brand && !brand.classList.contains('company-brand')) {
+    brand.classList.add('company-brand');
+    brand.setAttribute('aria-label', 'Johnson & Johnson MedTech candidate vision home');
+    brand.innerHTML = '<span class="company-wordmark"><strong>Johnson &amp; Johnson</strong><em>MedTech</em></span><span class="candidate-qualifier">Candidate vision <b>by Russell Dudek</b></span>';
+  }
+  const heroCopy = document.querySelector('.hero-copy');
+  if (heroCopy && !heroCopy.querySelector('.hero-company-lockup')) {
+    heroCopy.insertAdjacentHTML('afterbegin','<div class="hero-company-lockup"><span class="company-wordmark"><strong>Johnson &amp; Johnson</strong><em>MedTech</em></span><span>Candidate vision for Director, MedTech Digital Factory - OTC<br><b>by Russell Dudek</b></span></div>');
+  }
+
   const navToggle = document.querySelector('.nav-toggle');
   const nav = document.getElementById('primary-nav');
   if (navToggle && nav) {
