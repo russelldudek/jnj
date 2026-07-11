@@ -1,6 +1,7 @@
 {
-  "campaign_state": "building",
-  "remaining_gate": "Live GitHub Pages deployment and repository-path verification",
+  "campaign_state": "blocked",
+  "remaining_gate": "GitHub Pages deployment and live repository-path verification",
+  "blocker": "The available GitHub connector cannot enable or inspect Pages, and the intended live URL could not be resolved through the available external network path.",
   "files": {
     "index.html": true,
     "resume.html": true,
@@ -51,6 +52,6 @@
   "source_and_pdf_main_verification": true,
   "live_deployment_verified": false,
   "pass": false,
-  "failures": ["Live GitHub Pages routes and downloads have not yet been verified"],
+  "failures": ["Live GitHub Pages routes, reciprocal navigation, employer identity, motion, and PDF downloads have not yet been verified"],
   "reciprocal": {"resume_to_cover": true, "cover_to_resume": true, "toolbar_no_print": true}
 }
