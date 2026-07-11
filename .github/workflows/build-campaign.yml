@@ -14,16 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore and verify campaign source bundle
-        run: |
-          cat scripts/source-bundle/part-* > /tmp/campaign-source.tar.gz.b64
-          # Repair the single connector mutation detected by Git blob hash comparison.
-          sed -i 's/Ci9SNpLdtF2/Ci9SNJpLdtF2/' /tmp/campaign-source.tar.gz.b64
-          echo 'f6e37486cd3d74ea5d103e8b84abc778aa4fd1fd9f58347eb50fd81f47efdec4  /tmp/campaign-source.tar.gz.b64' | sha256sum -c -
-          base64 --decode /tmp/campaign-source.tar.gz.b64 > /tmp/campaign-source.tar.gz
-          echo 'b8598c13279748f3c8422ff9507f7807800e4f022a650fd08620950795ce87f0  /tmp/campaign-source.tar.gz' | sha256sum -c -
-          tar -xzf /tmp/campaign-source.tar.gz -C .
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -35,7 +25,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y poppler-utils
 
-      - name: Generate PDFs
+      - name: Generate PDFs from current main source
         run: npm run pdf
 
       - name: Validate PDF contracts
@@ -46,15 +36,14 @@ jobs:
             test -s "$f"
           done
 
-      - name: Commit complete campaign to main
+      - name: Commit regenerated PDFs and audit evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm -f scripts/campaign-source.tar.gz.b64 || true
-          git add index.html resume.html cover-letter.html interview-brief.html 120-day-plan.html otc-exception-portfolio.html styles.css app.js assets docs research-notes.md README.md package.json scripts/generate-pdfs.mjs scripts/source-bundle qa .github/workflows/build-campaign.yml
+          git add docs qa
           if git diff --cached --quiet; then
-            echo 'Campaign already current'
+            echo 'PDFs already current'
           else
-            git commit -m 'Build complete J&J RoleForge campaign [skip pdf-build]'
+            git commit -m 'Regenerate aligned campaign PDFs [skip pdf-build]'
             git push origin main
           fi
