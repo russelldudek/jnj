@@ -3,8 +3,8 @@
 ## Campaign classification
 
 - Repository before reconstruction: planned (empty)
-- Repository after source build: building pending commit and live Pages verification
-- Canonical branch: main
+- Repository after complete source and PDF publication to `main`: building pending live GitHub Pages deployment verification and final completion audit
+- Canonical branch: `main`
 
 ## Rendered visual review
 
@@ -23,7 +23,11 @@ Repairs made during review:
 - rebalanced resume page one by moving a complete evidence module from page two;
 - rebuilt resume page two around complementary leadership and selected operating mechanisms;
 - removed skip navigation and document controls from print/PDF output;
-- increased cover-letter typography and vertical rhythm for a balanced one-page composition.
+- increased cover-letter typography and vertical rhythm for a balanced one-page composition;
+- added a visible Johnson & Johnson / MedTech recognition layer above the fold;
+- added an immediate independent-candidate qualifier;
+- replaced the unexplained Arial/Georgia pairing with a documented licensed/system sans-serif substitute stack;
+- documented employer-identity provenance, color confidence, and the technical reason for not using a redrawn or third-party logo.
 
 ## Role-derived motion and interaction
 
@@ -52,7 +56,18 @@ Every printable HTML page presents a visible `Download PDF` link to a generated 
 - Interactive state is not dependent on hover.
 - Internal relative links and PDF paths resolve in the source manifest.
 - Source paths are repository-relative for GitHub Pages deployment.
+- Rendered evidence reports one visible employer-identity lockup and an immediate independent-candidate qualifier.
+
+## Brand Fidelity Audit
+
+- Visible company identity: passed.
+- Official standalone logo asset: unavailable through the connected official-page sources; documented omission contract applied instead of tracing, redrawing, or using a third-party asset.
+- Color token provenance: passed.
+- Typography decision: passed.
+- Committed brand asset/provenance package: passed.
+- Document brand continuity: passed.
+- Independent-candidate distinction: passed.
 
 ## Remaining publication gate
 
-The source and PDF set must be committed to `main`, re-fetched from `ref=main`, and compared with the live GitHub Pages deployment. Campaign state remains building until those checks pass.
+The complete source and regenerated PDF set are committed to `main` and re-fetched from `ref=main`. The live GitHub Pages deployment must still be enabled or verified against the audited `main` head. Campaign state remains `building` until the live routes, reciprocal document navigation, and PDF downloads are verified from the repository-named Pages path.
