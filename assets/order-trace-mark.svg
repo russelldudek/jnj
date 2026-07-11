@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" role="img" aria-labelledby="title desc">
+  <title id="title">Order Trace mark</title>
+  <desc id="desc">A red path passing through three checkpoints and resolving into a clear arrow.</desc>
+  <path d="M5 30 C28 5 48 44 72 18 S116 10 151 24" fill="none" stroke="#d71920" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="35" cy="20" r="5" fill="#fff" stroke="#d71920" stroke-width="3"/>
+  <circle cx="78" cy="15" r="5" fill="#fff" stroke="#d71920" stroke-width="3"/>
+  <circle cx="119" cy="13" r="5" fill="#fff" stroke="#d71920" stroke-width="3"/>
+  <path d="M145 17 L156 24 L145 31" fill="none" stroke="#d71920" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

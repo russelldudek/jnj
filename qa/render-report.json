@@ -1,0 +1,78 @@
+{
+  "screenshots": {
+    "desktop-1440x900": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 11758,
+      "navDisplay": "flex"
+    },
+    "laptop-1280x800": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "scrollHeight": 11314,
+      "navDisplay": "flex"
+    },
+    "tablet-768x1024": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "scrollHeight": 11518,
+      "navDisplay": "none"
+    },
+    "mobile-390x844": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 17717,
+      "navDisplay": "none"
+    },
+    "reduced-motion": {
+      "laneAnimation": "none",
+      "htmlScrollBehavior": "auto",
+      "packetPositions": [
+        [
+          "176.8813018798828",
+          "161.5771026611328"
+        ],
+        [
+          "757.01611328125",
+          "237.98028564453125"
+        ],
+        [
+          "334.3556213378906",
+          "523.5602416992188"
+        ]
+      ]
+    }
+  },
+  "pdfs": {
+    "resume.html": {
+      "path": "docs/russell-dudek-jnj-resume.pdf",
+      "bytes": 69711
+    },
+    "cover-letter.html": {
+      "path": "docs/russell-dudek-jnj-cover-letter.pdf",
+      "bytes": 52106
+    },
+    "interview-brief.html": {
+      "path": "docs/russell-dudek-jnj-interview-brief.pdf",
+      "bytes": 77631
+    },
+    "120-day-plan.html": {
+      "path": "docs/russell-dudek-jnj-120-day-plan.pdf",
+      "bytes": 69208
+    },
+    "otc-exception-portfolio.html": {
+      "path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf",
+      "bytes": 52538
+    }
+  },
+  "interaction": {
+    "stageBefore": "Customer commitment",
+    "stageAfter": "Invoice",
+    "scenarioAfter": "Invoice is disputed"
+  },
+  "accessibility": {
+    "skipLink": 1,
+    "buttons": 14,
+    "main": 1
+  }
+}

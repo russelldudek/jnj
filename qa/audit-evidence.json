@@ -1,0 +1,110 @@
+{
+  "files": {
+    "index.html": true,
+    "resume.html": true,
+    "cover-letter.html": true,
+    "interview-brief.html": true,
+    "120-day-plan.html": true,
+    "otc-exception-portfolio.html": true,
+    "styles.css": true,
+    "app.js": true,
+    "assets/order-trace-mark.svg": true,
+    "README.md": true,
+    "research-notes.md": true
+  },
+  "links": {
+    "index.html": {
+      "bad": [],
+      "download_pdf": true
+    },
+    "resume.html": {
+      "bad": [],
+      "download_pdf": true
+    },
+    "cover-letter.html": {
+      "bad": [],
+      "download_pdf": true
+    },
+    "interview-brief.html": {
+      "bad": [],
+      "download_pdf": true
+    },
+    "120-day-plan.html": {
+      "bad": [],
+      "download_pdf": true
+    },
+    "otc-exception-portfolio.html": {
+      "bad": [],
+      "download_pdf": true
+    }
+  },
+  "pdfs": {
+    "docs/russell-dudek-jnj-resume.pdf": {
+      "pages": 2,
+      "expected": 2,
+      "bytes": 69711,
+      "pass": true
+    },
+    "docs/russell-dudek-jnj-cover-letter.pdf": {
+      "pages": 1,
+      "expected": 1,
+      "bytes": 52106,
+      "pass": true
+    },
+    "docs/russell-dudek-jnj-interview-brief.pdf": {
+      "pages": 4,
+      "expected": 4,
+      "bytes": 77631,
+      "pass": true
+    },
+    "docs/russell-dudek-jnj-120-day-plan.pdf": {
+      "pages": 3,
+      "expected": 3,
+      "bytes": 69208,
+      "pass": true
+    },
+    "docs/russell-dudek-jnj-otc-exception-portfolio.pdf": {
+      "pages": 2,
+      "expected": 2,
+      "bytes": 52538,
+      "pass": true
+    }
+  },
+  "browser": {
+    "desktop": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "overflow": false,
+      "stageKeyboard": "Invoice",
+      "scenarioKeyboard": "Invoice is disputed",
+      "activeTag": "BUTTON"
+    },
+    "laptop": {
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "overflow": false
+    },
+    "tablet": {
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "overflow": false
+    },
+    "mobile": {
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "overflow": false,
+      "navOpened": true
+    },
+    "reduced": {
+      "laneAnimation": "none",
+      "scrollBehavior": "auto"
+    }
+  },
+  "pass": true,
+  "failures": [],
+  "reciprocal": {
+    "resume_to_cover": true,
+    "cover_to_resume": true,
+    "toolbar_no_print": true
+  }
+}
