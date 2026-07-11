@@ -1,1 +1,0 @@
-Trigger the canonical PDF and rendered-QA workflow after commit 3e16549c1e5220c10047991e087090942df7bb44.
