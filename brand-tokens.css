@@ -1,0 +1,18 @@
+/* Johnson & Johnson campaign recognition layer.
+   Provenance and confidence are documented in brand-intelligence.md. */
+:root {
+  --brand-primary: #d71920; /* source-sampled approximation from current official J&J web identity; medium confidence */
+  --brand-primary-dark: #a90f18; /* source-derived accessible dark variant; candidate-adjusted */
+  --brand-ink: #15191d; /* source-sampled neutral family; medium confidence */
+  --brand-ink-2: #252b31; /* source-derived neutral variant */
+  --brand-light: #ffffff; /* official/public presentation neutral */
+  --brand-soft: #f4f5f5; /* source-derived neutral surface */
+  --brand-line: #d9dcde; /* source-derived neutral rule */
+  --brand-muted: #626a70; /* accessible supporting text */
+  --campaign-teal: #1f7182; /* candidate-original; subordinate Order Trace lens */
+  --campaign-violet: #6d4a8e; /* candidate-original; subordinate Order Trace lens */
+  --campaign-orange: #d96b1b; /* candidate-original; subordinate Order Trace lens */
+  --campaign-green: #3e7c4c; /* candidate-original; subordinate Order Trace lens */
+  --brand-display: "Helvetica Neue", Aptos, "Liberation Sans", Arial, sans-serif;
+  --brand-body: "Helvetica Neue", Aptos, "Liberation Sans", Arial, sans-serif;
+}
