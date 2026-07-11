@@ -11,7 +11,7 @@ RoleForge candidate campaign for Russell Dudek.
 - Canonical branch: `main`
 - Job posting: https://www.careers.jnj.com/en/jobs/r-087466/director-medtech-digital-factory-otc/?source=LinkedIn
 - Print standard: US Letter
-- Current campaign state: building pending live GitHub Pages deployment verification and final completion audit
+- Current campaign state: blocked pending GitHub Pages deployment and live repository-path verification
 
 ## Strategic thesis
 
@@ -50,6 +50,6 @@ The Order Trace mark is a supplemental candidate-created operating-system symbol
 
 ## Publication
 
-The complete source and generated PDF set are committed to `main`. GitHub Pages must deploy from `main` and `/ (root)` and the live routes must be verified before the campaign may be classified as complete.
+The complete source and generated PDF set are committed to `main`. Completion is blocked because the available connector cannot enable or inspect GitHub Pages. Pages must deploy from `main` and `/ (root)`, after which the live HTML routes, reciprocal document links, motion, brand identity, and PDF downloads must be verified.
 
 This is an independent candidate campaign and is not an official Johnson & Johnson publication.
