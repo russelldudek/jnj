@@ -3,7 +3,7 @@
 ## Campaign classification
 
 - Repository before reconstruction: planned (empty)
-- Repository after complete source and PDF publication to `main`: building pending live GitHub Pages deployment verification and final completion audit
+- Repository after complete source and PDF publication to `main`: blocked pending GitHub Pages deployment and live repository-path verification
 - Canonical branch: `main`
 
 ## Rendered visual review
@@ -70,4 +70,4 @@ Every printable HTML page presents a visible `Download PDF` link to a generated 
 
 ## Remaining publication gate
 
-The complete source and regenerated PDF set are committed to `main` and re-fetched from `ref=main`. The live GitHub Pages deployment must still be enabled or verified against the audited `main` head. Campaign state remains `building` until the live routes, reciprocal document navigation, and PDF downloads are verified from the repository-named Pages path.
+The complete source and regenerated PDF set are committed to `main` and re-fetched from `ref=main`. Completion is blocked because the available GitHub connector cannot enable or inspect Pages and the live repository-named site could not be resolved through the available external network path. The live routes, reciprocal document navigation, employer identity, motion, and PDF downloads therefore remain unverified from GitHub Pages.
