@@ -1,0 +1,41 @@
+{
+  "feature": "Order Trace Journey redesign",
+  "date": "2026-07-12",
+  "implementation": {
+    "loader": "order-trace-loader.js",
+    "interaction": "order-trace-journey.js",
+    "styles": "order-trace-journey.css",
+    "shared_runtime": "app.js"
+  },
+  "concept": "Directional eight-stage Order-to-Cash journey with a moving order packet and dynamic decision brief",
+  "local_browser_qa": {
+    "renderer": "Playwright Python using system Chromium",
+    "desktop_1440x900": {"page_scroll_width": 1440, "client_width": 1440, "overflow": false, "rail_scroll_width": 952, "rail_client_width": 952},
+    "laptop_1280x800": {"page_scroll_width": 1280, "client_width": 1280, "overflow": false, "rail_scroll_width": 930, "rail_client_width": 846},
+    "tablet_768x1024": {"page_scroll_width": 768, "client_width": 768, "overflow": false, "rail_scroll_width": 930, "rail_client_width": 720},
+    "mobile_390x844": {"page_scroll_width": 390, "client_width": 390, "overflow": false, "rail_scroll_width": 820, "rail_client_width": 350},
+    "intentional_horizontal_scroll": "Journey rail only at laptop, tablet, and mobile widths",
+    "initial_stage": "Validation",
+    "stage_count": 8,
+    "keyboard": {"ArrowRight": true, "ArrowLeft": true, "Home": true, "End": true},
+    "click_transition": "Invoice selection updated the decision brief to Invoice and Decision 5 of 8",
+    "reduced_motion": {"packet_transition_duration": "0s", "content_usable": true}
+  },
+  "content_integrity": {
+    "invented_metrics_added": false,
+    "internal_jnj_claims_added": false,
+    "operating_hypothesis_label_visible": true,
+    "independent_candidate_identity_preserved": true
+  },
+  "visual_changes": [
+    "Removed circular orbit and oversized oval stage controls",
+    "Introduced a left narrative pane and right MedTech decision workspace",
+    "Recomposed the lifecycle as an ordered horizontal journey",
+    "Separated stage progression from the moving order-packet trace",
+    "Connected each selected checkpoint to ownership, evidence, consequences, and intervention",
+    "Recomposed tablet and mobile layouts with a bounded horizontal rail"
+  ],
+  "live_pages_verification": false,
+  "campaign_state": "blocked",
+  "remaining_gate": "Verify the redesigned runtime from the live GitHub Pages repository path"
+}
