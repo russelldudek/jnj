@@ -19,6 +19,22 @@ A Digital Factory should convert recurring OTC friction into governed process pr
 
 `OTC = Order-to-Cash` is labeled throughout as a working hypothesis because the original posting URL is preserved but its full body was not retrievable during reconstruction.
 
+## Order Trace Journey
+
+The original circular Order Trace hero was replaced on July 12, 2026 with a directional, end-to-end journey.
+
+The redesigned experience uses:
+
+- eight ordered lifecycle checkpoints;
+- a moving order packet and progress trace;
+- upstream, current, and downstream decision states;
+- a dynamic decision brief covering ownership, required evidence, unresolved consequences, and intervention stance;
+- click, touch, Arrow Left/Right, Home, and End interaction;
+- complete reduced-motion behavior;
+- responsive horizontal rail behavior on laptop, tablet, and mobile without page-level overflow.
+
+The redesign is implemented through `order-trace-loader.js`, `order-trace-journey.css`, and `order-trace-journey.js`. Browser QA is recorded in `qa/order-trace-journey-report.json`.
+
 ## Manifest
 
 - `index.html`
@@ -31,6 +47,9 @@ A Digital Factory should convert recurring OTC friction into governed process pr
 - `brand-tokens.css`
 - `styles.css`
 - `app.js`
+- `order-trace-loader.js`
+- `order-trace-journey.css`
+- `order-trace-journey.js`
 - `assets/order-trace-mark.svg`
 - `assets/brand/README.md`
 - `docs/russell-dudek-jnj-resume.pdf`
@@ -52,6 +71,6 @@ The Order Trace mark is a supplemental candidate-created operating-system symbol
 
 ## Publication
 
-The complete source and generated PDF set are committed to `main`. Completion is blocked because the available connector cannot enable or inspect GitHub Pages. Pages must deploy from `main` and `/ (root)`, after which the live HTML routes, reciprocal document links, motion, brand identity, and PDF downloads must be verified.
+The complete source and generated PDF set are committed to `main`. Completion is blocked because the available connector cannot enable or inspect GitHub Pages. Pages must deploy from `main` and `/ (root)`, after which the live HTML routes, reciprocal document links, redesigned journey motion, brand identity, and PDF downloads must be verified.
 
 This is an independent candidate campaign and is not an official Johnson & Johnson publication.
