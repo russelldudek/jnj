@@ -1,0 +1,59 @@
+{
+  "campaign": "Johnson & Johnson MedTech Digital Factory - OTC",
+  "canonical_branch": "main",
+  "campaign_state": "blocked",
+  "remaining_gate": "GitHub Pages deployment and live repository-path verification",
+  "required_routes": [
+    {"path": "index.html", "purpose": "candidate vision", "verified_on_main": true},
+    {"path": "resume.html", "purpose": "role-aligned resume", "verified_on_main": true},
+    {"path": "cover-letter.html", "purpose": "cover letter", "verified_on_main": true},
+    {"path": "interview-brief.html", "purpose": "interview thesis brief", "verified_on_main": true},
+    {"path": "120-day-plan.html", "purpose": "120-day entry plan", "verified_on_main": true},
+    {"path": "otc-exception-portfolio.html", "purpose": "OTC Exception Portfolio Canvas", "verified_on_main": true}
+  ],
+  "brand_package": [
+    {"path": "brand-intelligence.md", "verified_on_main": true},
+    {"path": "brand-tokens.css", "verified_on_main": true},
+    {"path": "assets/brand/README.md", "verified_on_main": true},
+    {"path": "assets/order-trace-mark.svg", "verified_on_main": true, "classification": "candidate-original supplemental mark"}
+  ],
+  "shared_source": [
+    {"path": "styles.css", "verified_on_main": true},
+    {"path": "app.js", "verified_on_main": true},
+    {"path": "README.md", "verified_on_main": true},
+    {"path": "research-notes.md", "verified_on_main": true}
+  ],
+  "generated_documents": [
+    {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true},
+    {"path": "docs/russell-dudek-jnj-cover-letter.pdf", "pages": 1, "expected_pages": 1, "verified_on_main": true},
+    {"path": "docs/russell-dudek-jnj-interview-brief.pdf", "pages": 4, "verified_on_main": true},
+    {"path": "docs/russell-dudek-jnj-120-day-plan.pdf", "pages": 3, "verified_on_main": true},
+    {"path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf", "pages": 2, "verified_on_main": true}
+  ],
+  "qa_evidence": [
+    {"path": "qa/render-report.json", "verified_on_main": true},
+    {"path": "qa/audit-evidence.json", "verified_on_main": true},
+    {"path": "qa/brand-fidelity-audit.md", "verified_on_main": true},
+    {"path": "qa/desktop-1440x900.png", "verified_on_main": true},
+    {"path": "qa/laptop-1280x800.png", "verified_on_main": true},
+    {"path": "qa/tablet-768x1024.png", "verified_on_main": true},
+    {"path": "qa/mobile-390x844.png", "verified_on_main": true},
+    {"path": "qa/reduced-motion-1440x900.png", "verified_on_main": true}
+  ],
+  "verified_contracts": {
+    "main_branch_completeness": true,
+    "brand_fidelity_source_and_rendered_artifacts": true,
+    "visible_company_identity": true,
+    "independent_candidate_distinction": true,
+    "responsive_render_review": true,
+    "reduced_motion": true,
+    "role_derived_motion": true,
+    "keyboard_interaction": true,
+    "resume_exactly_two_pages": true,
+    "cover_letter_exactly_one_page": true,
+    "reciprocal_resume_cover_navigation_in_source": true,
+    "pdf_downloads_committed": true,
+    "live_pages_deployment": false,
+    "live_route_verification": false
+  }
+}
