@@ -1,5 +1,6 @@
 (() => {
   const workspace = document.querySelector('.journey-shell');
+  const railWrap = document.querySelector('.journey-rail-wrap');
   const buttons = [...document.querySelectorAll('.journey-step[data-stage]')];
   if (!workspace || !buttons.length) return;
 
@@ -86,7 +87,8 @@
     evidence: document.querySelector('[data-journey-evidence]'),
     consequences: document.querySelector('[data-journey-consequences]'),
     action: document.querySelector('[data-journey-action]'),
-    position: document.querySelector('[data-journey-position]')
+    position: document.querySelector('[data-journey-position]'),
+    checkpoint: document.querySelector('[data-journey-checkpoint]')
   };
 
   let activeIndex = 1;
@@ -95,6 +97,27 @@
   function renderList(target, items) {
     if (!target) return;
     target.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+  }
+
+  function ensureStageVisible(button) {
+    if (!railWrap || railWrap.scrollWidth <= railWrap.clientWidth) return;
+    const wrapRect = railWrap.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const edgePadding = 12;
+    let delta = 0;
+
+    if (buttonRect.left < wrapRect.left + edgePadding) {
+      delta = buttonRect.left - wrapRect.left - edgePadding;
+    } else if (buttonRect.right > wrapRect.right - edgePadding) {
+      delta = buttonRect.right - wrapRect.right + edgePadding;
+    }
+
+    if (delta) {
+      railWrap.scrollBy({
+        left: delta,
+        behavior: reduceMotion.matches ? 'auto' : 'smooth'
+      });
+    }
   }
 
   function selectStage(key, options = {}) {
@@ -128,15 +151,10 @@
     renderList(targets.consequences, data.consequences);
     if (targets.action) targets.action.textContent = data.action;
     if (targets.position) targets.position.textContent = `Decision ${activeIndex + 1} of ${buttons.length}`;
+    if (targets.checkpoint) targets.checkpoint.textContent = `${String(activeIndex + 1).padStart(2, '0')} · Selected checkpoint`;
 
     if (options.focus) buttons[activeIndex].focus();
-    if (options.scroll !== false) {
-      buttons[activeIndex].scrollIntoView({
-        behavior: reduceMotion.matches ? 'auto' : 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
-    }
+    if (options.scroll !== false) ensureStageVisible(buttons[activeIndex]);
   }
 
   buttons.forEach(button => {
