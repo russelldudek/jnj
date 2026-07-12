@@ -1,0 +1,30 @@
+{
+  "suggested_chat_name": "Johnson & Johnson - MedTech Digital Factory OTC",
+  "company": "Johnson & Johnson MedTech",
+  "canonical_role": "Director, MedTech Digital Factory - OTC",
+  "candidate": "Russell Dudek",
+  "repository": "russelldudek/jnj",
+  "canonical_branch": "main",
+  "repository_visibility": "public",
+  "job_posting": "https://www.careers.jnj.com/en/jobs/r-087466/director-medtech-digital-factory-otc/?source=LinkedIn",
+  "expected_live_site": "https://russelldudek.github.io/jnj/",
+  "campaign_state": "blocked",
+  "blocker": "The available GitHub connector cannot enable or inspect GitHub Pages, and the expected live URL has not been verified from the deployed repository path.",
+  "working_hypotheses": [
+    "OTC is treated as Order-to-Cash because the full public posting body was not retrievable."
+  ],
+  "candidate_thesis": "A Digital Factory should convert recurring OTC friction into governed process products - making every order explainable, every exception visible, and every improvement reusable.",
+  "visual_system": "The Order Trace",
+  "operating_model": "OTC Friction Compression System",
+  "print_standard": "US Letter",
+  "brand_identity_mode": "Clearly typeset nominative Johnson & Johnson / MedTech identity with immediate independent-candidate qualification; standalone official asset unavailable with documented technical/source reason.",
+  "independent_candidate_statement": "Independent candidate campaign by Russell Dudek; not an official Johnson & Johnson publication.",
+  "completion_policy": "Do not classify as complete until GitHub Pages is enabled from main / root and all live routes, reciprocal navigation, motion, employer identity, and PDF downloads are verified.",
+  "audit_records": {
+    "artifact_manifest": "artifact-manifest.json",
+    "brand_intelligence": "brand-intelligence.md",
+    "brand_fidelity_audit": "qa/brand-fidelity-audit.md",
+    "render_report": "qa/render-report.json",
+    "completion_evidence": "qa/audit-evidence.json"
+  }
+}
