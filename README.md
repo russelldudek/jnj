@@ -39,6 +39,8 @@ A Digital Factory should convert recurring OTC friction into governed process pr
 - `docs/russell-dudek-jnj-120-day-plan.pdf`
 - `docs/russell-dudek-jnj-otc-exception-portfolio.pdf`
 - `research-notes.md`
+- `artifact-manifest.json`
+- `campaign-metadata.json`
 - RoleForge design and implementation records under `docs/superpowers/`
 - Rendered and audit evidence under `qa/`
 
