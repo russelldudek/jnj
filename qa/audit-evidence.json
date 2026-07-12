@@ -16,7 +16,9 @@
     "assets/order-trace-mark.svg": true,
     "assets/brand/README.md": true,
     "README.md": true,
-    "research-notes.md": true
+    "research-notes.md": true,
+    "artifact-manifest.json": true,
+    "campaign-metadata.json": true
   },
   "links": {
     "index.html": {"bad": [], "download_pdf": true},
@@ -50,6 +52,7 @@
     "pass": true
   },
   "source_and_pdf_main_verification": true,
+  "canonical_campaign_records": true,
   "live_deployment_verified": false,
   "pass": false,
   "failures": ["Live GitHub Pages routes, reciprocal navigation, employer identity, motion, and PDF downloads have not yet been verified"],
