@@ -20,12 +20,17 @@
   "shared_source": [
     {"path": "styles.css", "verified_on_main": true},
     {"path": "app.js", "verified_on_main": true},
+    {"path": "order-trace-loader.js", "verified_on_main": true},
+    {"path": "order-trace-journey.css", "verified_on_main": true},
+    {"path": "order-trace-journey.js", "verified_on_main": true},
     {"path": "README.md", "verified_on_main": true},
     {"path": "research-notes.md", "verified_on_main": true}
   ],
   "campaign_records": [
     {"path": "artifact-manifest.json", "verified_on_main": true},
-    {"path": "campaign-metadata.json", "verified_on_main": true}
+    {"path": "campaign-metadata.json", "verified_on_main": true},
+    {"path": "docs/superpowers/specs/2026-07-12-order-trace-journey-design.md", "verified_on_main": true},
+    {"path": "docs/superpowers/plans/2026-07-12-order-trace-journey.md", "verified_on_main": true}
   ],
   "generated_documents": [
     {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true},
@@ -37,18 +42,20 @@
   "qa_evidence": [
     {"path": "qa/render-report.json", "verified_on_main": true},
     {"path": "qa/audit-evidence.json", "verified_on_main": true},
+    {"path": "qa/order-trace-journey-report.json", "verified_on_main": true},
     {"path": "qa/brand-fidelity-audit.md", "verified_on_main": true},
-    {"path": "qa/desktop-1440x900.png", "verified_on_main": true},
-    {"path": "qa/laptop-1280x800.png", "verified_on_main": true},
-    {"path": "qa/tablet-768x1024.png", "verified_on_main": true},
-    {"path": "qa/mobile-390x844.png", "verified_on_main": true},
-    {"path": "qa/reduced-motion-1440x900.png", "verified_on_main": true}
+    {"path": "qa/desktop-1440x900.png", "verified_on_main": true, "status": "pre-redesign baseline"},
+    {"path": "qa/laptop-1280x800.png", "verified_on_main": true, "status": "pre-redesign baseline"},
+    {"path": "qa/tablet-768x1024.png", "verified_on_main": true, "status": "pre-redesign baseline"},
+    {"path": "qa/mobile-390x844.png", "verified_on_main": true, "status": "pre-redesign baseline"},
+    {"path": "qa/reduced-motion-1440x900.png", "verified_on_main": true, "status": "pre-redesign baseline"}
   ],
   "verified_contracts": {
     "main_branch_completeness": true,
     "brand_fidelity_source_and_rendered_artifacts": true,
     "visible_company_identity": true,
     "independent_candidate_distinction": true,
+    "order_trace_journey_local_render_review": true,
     "responsive_render_review": true,
     "reduced_motion": true,
     "role_derived_motion": true,
