@@ -23,6 +23,10 @@
     {"path": "README.md", "verified_on_main": true},
     {"path": "research-notes.md", "verified_on_main": true}
   ],
+  "campaign_records": [
+    {"path": "artifact-manifest.json", "verified_on_main": true},
+    {"path": "campaign-metadata.json", "verified_on_main": true}
+  ],
   "generated_documents": [
     {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true},
     {"path": "docs/russell-dudek-jnj-cover-letter.pdf", "pages": 1, "expected_pages": 1, "verified_on_main": true},
