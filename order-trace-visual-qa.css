@@ -1,0 +1,83 @@
+/* Visual-regression corrections for the Order Trace journey.
+   Keeps the moving packet in a dedicated lane below all checkpoint copy
+   and prevents 1280px workspace overflow/clipping. */
+.journey-rail {
+  padding-bottom: 3rem;
+}
+
+.journey-line-progress {
+  top: auto;
+  bottom: 1.35rem;
+}
+
+.journey-rail::after {
+  top: auto;
+  bottom: 1.35rem;
+}
+
+.journey-packet {
+  top: auto;
+  bottom: .675rem;
+}
+
+@media (min-width: 961px) and (max-width: 1320px) {
+  .journey-shell {
+    grid-template-columns: minmax(260px, .56fr) minmax(0, 1.74fr);
+  }
+
+  .journey-intro {
+    padding: 2.5rem 2rem;
+  }
+
+  .journey-intro .hero-copy h1 {
+    font-size: clamp(2.8rem, 4vw, 4.3rem);
+  }
+
+  .journey-rail-wrap {
+    overflow-x: visible;
+  }
+
+  .journey-rail {
+    min-width: 0;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .journey-step {
+    padding-inline: .28rem;
+  }
+
+  .journey-step-node {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .journey-step-label {
+    max-width: 11ch;
+    font-size: .68rem;
+  }
+
+  .journey-step-summary {
+    max-width: 13ch;
+    font-size: .61rem;
+  }
+
+  .journey-decision-grid {
+    grid-template-columns: minmax(230px, 1.3fr) repeat(2, minmax(155px, .8fr));
+  }
+
+  .journey-decision-cell {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .journey-decision-cell:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .journey-decision-cell:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .journey-action {
+    grid-column: span 2;
+  }
+}

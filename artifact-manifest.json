@@ -4,53 +4,206 @@
   "campaign_state": "blocked",
   "remaining_gate": "GitHub Pages deployment and live repository-path verification",
   "required_routes": [
-    {"path": "index.html", "purpose": "candidate vision", "verified_on_main": true},
-    {"path": "resume.html", "purpose": "role-aligned resume", "verified_on_main": true},
-    {"path": "cover-letter.html", "purpose": "cover letter", "verified_on_main": true},
-    {"path": "interview-brief.html", "purpose": "interview thesis brief", "verified_on_main": true},
-    {"path": "120-day-plan.html", "purpose": "120-day entry plan", "verified_on_main": true},
-    {"path": "otc-exception-portfolio.html", "purpose": "OTC Exception Portfolio Canvas", "verified_on_main": true}
+    {
+      "path": "index.html",
+      "purpose": "candidate vision",
+      "verified_on_main": true
+    },
+    {
+      "path": "resume.html",
+      "purpose": "role-aligned resume",
+      "verified_on_main": true
+    },
+    {
+      "path": "cover-letter.html",
+      "purpose": "cover letter",
+      "verified_on_main": true
+    },
+    {
+      "path": "interview-brief.html",
+      "purpose": "interview thesis brief",
+      "verified_on_main": true
+    },
+    {
+      "path": "120-day-plan.html",
+      "purpose": "120-day entry plan",
+      "verified_on_main": true
+    },
+    {
+      "path": "otc-exception-portfolio.html",
+      "purpose": "OTC Exception Portfolio Canvas",
+      "verified_on_main": true
+    }
   ],
   "brand_package": [
-    {"path": "brand-intelligence.md", "verified_on_main": true},
-    {"path": "brand-tokens.css", "verified_on_main": true},
-    {"path": "assets/brand/README.md", "verified_on_main": true},
-    {"path": "assets/order-trace-mark.svg", "verified_on_main": true, "classification": "candidate-original supplemental mark"}
+    {
+      "path": "brand-intelligence.md",
+      "verified_on_main": true
+    },
+    {
+      "path": "brand-tokens.css",
+      "verified_on_main": true
+    },
+    {
+      "path": "assets/brand/README.md",
+      "verified_on_main": true
+    },
+    {
+      "path": "assets/order-trace-mark.svg",
+      "verified_on_main": true,
+      "classification": "candidate-original supplemental mark"
+    }
   ],
   "shared_source": [
-    {"path": "styles.css", "verified_on_main": true},
-    {"path": "app.js", "verified_on_main": true},
-    {"path": "order-trace-loader.js", "verified_on_main": true, "status": "superseded runtime retained for history"},
-    {"path": "order-trace-loader-v2.js", "verified_on_main": true, "status": "active clipping-safe runtime"},
-    {"path": "order-trace-journey.css", "verified_on_main": true},
-    {"path": "order-trace-journey.js", "verified_on_main": true},
-    {"path": "README.md", "verified_on_main": true},
-    {"path": "research-notes.md", "verified_on_main": true}
+    {
+      "path": "styles.css",
+      "verified_on_main": true
+    },
+    {
+      "path": "app.js",
+      "verified_on_main": true,
+      "status": "visual-QA wrapper; loads versioned app core"
+    },
+    {
+      "path": "order-trace-visual-qa.css",
+      "verified_on_main": true,
+      "status": "journey collision and 1280px composition regression layer"
+    },
+    {
+      "path": "site-visual-qa.css",
+      "verified_on_main": true,
+      "status": "cross-route responsive regression layer"
+    },
+    {
+      "path": "app-core.js",
+      "verified_on_main": true,
+      "status": "preserved shared application runtime"
+    },
+    {
+      "path": "order-trace-loader.js",
+      "verified_on_main": true,
+      "status": "superseded runtime retained for history"
+    },
+    {
+      "path": "order-trace-loader-v2.js",
+      "verified_on_main": true,
+      "status": "active clipping-safe runtime"
+    },
+    {
+      "path": "order-trace-journey.css",
+      "verified_on_main": true
+    },
+    {
+      "path": "order-trace-journey.js",
+      "verified_on_main": true
+    },
+    {
+      "path": "README.md",
+      "verified_on_main": true
+    },
+    {
+      "path": "research-notes.md",
+      "verified_on_main": true
+    }
   ],
   "campaign_records": [
-    {"path": "artifact-manifest.json", "verified_on_main": true},
-    {"path": "campaign-metadata.json", "verified_on_main": true},
-    {"path": "docs/superpowers/specs/2026-07-12-order-trace-journey-design.md", "verified_on_main": true},
-    {"path": "docs/superpowers/plans/2026-07-12-order-trace-journey.md", "verified_on_main": true}
+    {
+      "path": "artifact-manifest.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "campaign-metadata.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/superpowers/specs/2026-07-12-order-trace-journey-design.md",
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/superpowers/plans/2026-07-12-order-trace-journey.md",
+      "verified_on_main": true
+    }
   ],
   "generated_documents": [
-    {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true},
-    {"path": "docs/russell-dudek-jnj-cover-letter.pdf", "pages": 1, "expected_pages": 1, "verified_on_main": true},
-    {"path": "docs/russell-dudek-jnj-interview-brief.pdf", "pages": 4, "verified_on_main": true},
-    {"path": "docs/russell-dudek-jnj-120-day-plan.pdf", "pages": 3, "verified_on_main": true},
-    {"path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf", "pages": 2, "verified_on_main": true}
+    {
+      "path": "docs/russell-dudek-jnj-resume.pdf",
+      "pages": 2,
+      "expected_pages": 2,
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/russell-dudek-jnj-cover-letter.pdf",
+      "pages": 1,
+      "expected_pages": 1,
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/russell-dudek-jnj-interview-brief.pdf",
+      "pages": 4,
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/russell-dudek-jnj-120-day-plan.pdf",
+      "pages": 3,
+      "verified_on_main": true
+    },
+    {
+      "path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf",
+      "pages": 2,
+      "verified_on_main": true
+    }
   ],
   "qa_evidence": [
-    {"path": "qa/render-report.json", "verified_on_main": true},
-    {"path": "qa/audit-evidence.json", "verified_on_main": true},
-    {"path": "qa/order-trace-journey-report.json", "verified_on_main": true},
-    {"path": "qa/order-trace-clipping-regression.json", "verified_on_main": true},
-    {"path": "qa/brand-fidelity-audit.md", "verified_on_main": true},
-    {"path": "qa/desktop-1440x900.png", "verified_on_main": true, "status": "pre-redesign baseline"},
-    {"path": "qa/laptop-1280x800.png", "verified_on_main": true, "status": "pre-redesign baseline"},
-    {"path": "qa/tablet-768x1024.png", "verified_on_main": true, "status": "pre-redesign baseline"},
-    {"path": "qa/mobile-390x844.png", "verified_on_main": true, "status": "pre-redesign baseline"},
-    {"path": "qa/reduced-motion-1440x900.png", "verified_on_main": true, "status": "pre-redesign baseline"}
+    {
+      "path": "qa/render-report.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "qa/audit-evidence.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "qa/order-trace-journey-report.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "qa/full-site-regression-report.json",
+      "verified_on_main": true
+    },
+    {
+      "path": "qa/order-trace-clipping-regression.json",
+      "verified_on_main": true,
+      "status": "supersedes shallow collision audit"
+    },
+    {
+      "path": "qa/brand-fidelity-audit.md",
+      "verified_on_main": true
+    },
+    {
+      "path": "qa/desktop-1440x900.png",
+      "verified_on_main": true,
+      "status": "pre-redesign baseline"
+    },
+    {
+      "path": "qa/laptop-1280x800.png",
+      "verified_on_main": true,
+      "status": "pre-redesign baseline"
+    },
+    {
+      "path": "qa/tablet-768x1024.png",
+      "verified_on_main": true,
+      "status": "pre-redesign baseline"
+    },
+    {
+      "path": "qa/mobile-390x844.png",
+      "verified_on_main": true,
+      "status": "pre-redesign baseline"
+    },
+    {
+      "path": "qa/reduced-motion-1440x900.png",
+      "verified_on_main": true,
+      "status": "pre-redesign baseline"
+    }
   ],
   "verified_contracts": {
     "main_branch_completeness": true,
@@ -68,6 +221,11 @@
     "reciprocal_resume_cover_navigation_in_source": true,
     "pdf_downloads_committed": true,
     "live_pages_deployment": false,
-    "live_route_verification": false
+    "live_route_verification": false,
+    "marker_text_collision_regression": true,
+    "all_eight_stages_in_frame": true,
+    "decision_panel_1280_regression": true,
+    "all_routes_desktop_mobile_render_review": true,
+    "document_mobile_overflow_regression": true
   }
 }

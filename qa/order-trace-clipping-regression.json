@@ -1,33 +1,34 @@
 {
-  "feature": "Order Trace Journey clipping regression",
+  "feature": "Order Trace marker and responsive-layout regression",
   "date": "2026-07-12",
-  "root_cause": "The redesigned checkpoint buttons inherited the legacy circular-hero classes stage-button and stage-N. Those legacy selectors applied absolute positioning, a white active background, and translate(-50%, -50%), clipping the first checkpoint and expanding the selected checkpoint into a white column.",
-  "source_fix": {
-    "active_runtime": "order-trace-loader-v2.js",
-    "legacy_classes_removed": true,
-    "cache_bust_version": "20260712-clipfix1",
-    "asset_chain": [
-      "app.js -> order-trace-loader-v2.js?v=20260712-clipfix1",
-      "order-trace-loader-v2.js -> order-trace-journey.css?v=20260712-clipfix1",
-      "order-trace-loader-v2.js -> order-trace-journey.js?v=20260712-clipfix1"
-    ]
+  "status": "pass_local_live_pending",
+  "root_cause": "The moving order marker and progress trace occupied the same vertical band as checkpoint summaries; the prior QA asserted page overflow but did not assert element-to-element collision geometry.",
+  "fix": {
+    "dedicated_flow_lane": true,
+    "marker_position": "bottom: .675rem",
+    "progress_position": "bottom: 1.35rem",
+    "rail_bottom_padding": "3rem",
+    "compact_desktop_breakpoint": "1320px",
+    "mobile_document_trace_wrap": true,
+    "cache_version": "20260712-visualqa3"
   },
   "tdd": {
-    "red": "Regression test failed because the active Invoice checkpoint still contained stage-button and stage-5.",
-    "green": "Regression test passed after removing all legacy stage classes and versioning the runtime asset chain."
+    "red": "The regression test failed with marker overlap on Validation.",
+    "green": "The marker-clearance test passes after moving the packet into the dedicated lane."
   },
-  "viewports": {
-    "1536x1024": {"page_overflow": false, "legacy_classes": false, "white_active_column": false},
-    "1280x800": {"page_overflow": false, "legacy_classes": false, "white_active_column": false},
-    "768x1024": {"page_overflow": false, "legacy_classes": false, "white_active_column": false},
-    "390x844": {"page_overflow": false, "legacy_classes": false, "white_active_column": false}
+  "coverage": {
+    "viewports": ["1536x1024", "1440x900", "1280x800", "960x1024", "768x1024", "620x900", "390x844"],
+    "lifecycle_stages": 8,
+    "stage_viewport_combinations": 56,
+    "all_stage_text_and_node_collision_checks": true,
+    "decision_panel_geometry_checks": true,
+    "all_route_desktop_and_mobile_render_checks": true
   },
-  "visual_review": {
-    "invoice_selected": true,
-    "first_checkpoint_fully_visible": true,
-    "all_eight_checkpoints_in_frame_at_desktop": true,
-    "intentional_mobile_recomposition_preserved": true
-  },
+  "additional_defects_found_and_fixed": [
+    "1280px decision-panel overflow",
+    "1280px eighth-checkpoint clipping",
+    "Interview Thesis Brief mobile trace overflow"
+  ],
   "campaign_state": "blocked",
-  "remaining_gate": "Verify the corrected runtime on the live GitHub Pages repository path."
+  "remaining_gate": "Live GitHub Pages verification."
 }

@@ -1,0 +1,69 @@
+{
+  "feature": "Johnson & Johnson campaign full visual regression",
+  "date": "2026-07-12",
+  "status": "pass_local_live_pending",
+  "trigger": "User screenshot showed the moving order marker overlapping the selected checkpoint summary.",
+  "root_causes": [
+    "The progress trace and diamond marker were positioned at fixed top offsets inside the same vertical band used by checkpoint summary text.",
+    "At 1280px the five-column decision grid exceeded the available workspace width because its responsive breakpoint stopped at 1260px.",
+    "At 1280px the 930px minimum journey rail clipped the eighth checkpoint from the visible workspace.",
+    "The Interview Thesis Brief trace-mini sequence had no wrapping model, causing mobile horizontal overflow."
+  ],
+  "repairs": [
+    "Created a dedicated flow lane below all checkpoint text and moved the progress line, dashed trace, and diamond marker into it.",
+    "Extended the compact desktop composition through 1320px and reflowed the decision panel at 1280px.",
+    "Removed the rail minimum width in the compact desktop range so all eight checkpoints remain in frame.",
+    "Added a wrapping, two-column mobile treatment for trace-mini document sequences.",
+    "Added a small app wrapper that loads the existing app core and appends versioned visual-QA styles after the journey runtime."
+  ],
+  "order_trace_matrix": {
+    "viewports": ["1536x1024", "1440x900", "1280x800", "960x1024", "768x1024", "620x900", "390x844"],
+    "stages": ["commitment", "validation", "availability", "delivery", "invoice", "payment", "learning", "reuse"],
+    "stage_states_tested": 56,
+    "checks": {
+      "marker_text_collision": true,
+      "minimum_marker_text_clearance_px": 6,
+      "marker_inside_dedicated_lane": true,
+      "active_checkpoint_in_frame": true,
+      "all_eight_checkpoints_in_frame_at_desktop_and_tablet": true,
+      "decision_panel_overflow": false,
+      "decision_cell_overflow": false,
+      "page_horizontal_overflow": false,
+      "single_pressed_state": true,
+      "title_checkpoint_and_position_sync": true
+    }
+  },
+  "interaction": {
+    "mouse_selection": true,
+    "keyboard": ["ArrowLeft", "ArrowRight", "Home", "End"],
+    "reduced_motion": {
+      "marker_transition": "0s",
+      "progress_transition": "0s",
+      "node_animation": "none",
+      "content_usable": true
+    }
+  },
+  "rendered_routes": {
+    "viewports": ["1440x900", "390x844"],
+    "routes": ["index.html", "resume.html", "cover-letter.html", "interview-brief.html", "120-day-plan.html", "otc-exception-portfolio.html"],
+    "checks": {
+      "visible_h1": true,
+      "page_horizontal_overflow": false,
+      "mobile_navigation_opens": true,
+      "document_sheets_render": true,
+      "download_pdf_controls_visible": true,
+      "console_errors": false
+    }
+  },
+  "source_routes": {
+    "duplicate_ids": false,
+    "unknown_local_links": false,
+    "resume_to_cover_letter": true,
+    "cover_letter_to_resume": true
+  },
+  "publication": {
+    "campaign_state": "blocked",
+    "live_pages_verified": false,
+    "remaining_gate": "Verify the corrected runtime, all live routes, reciprocal navigation, motion, employer identity, and PDF downloads from the GitHub Pages repository path."
+  }
+}

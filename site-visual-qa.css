@@ -1,0 +1,23 @@
+/* Cross-route responsive corrections discovered during full rendered QA. */
+.trace-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  max-width: 100%;
+}
+
+.trace-mini span {
+  min-width: 0;
+}
+
+@media (max-width: 620px) {
+  .trace-mini {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trace-mini span {
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+}
