@@ -100,9 +100,10 @@
     document.querySelector('.sim-output').style.setProperty('--progress',d.progress);
   }));
 
-  if (document.querySelector('.trace-stage') && !document.querySelector('script[src="order-trace-loader.js"]')) {
+  if (document.querySelector('.trace-stage') && !document.querySelector('script[data-order-trace-loader]')) {
     const journeyScript = document.createElement('script');
-    journeyScript.src = 'order-trace-loader.js';
+    journeyScript.src = 'order-trace-loader-v2.js?v=20260712-clipfix1';
+    journeyScript.dataset.orderTraceLoader = 'true';
     document.body.appendChild(journeyScript);
   }
 })();
