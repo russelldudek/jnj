@@ -99,4 +99,10 @@
     }
     document.querySelector('.sim-output').style.setProperty('--progress',d.progress);
   }));
+
+  if (document.querySelector('.trace-stage') && !document.querySelector('script[src="order-trace-loader.js"]')) {
+    const journeyScript = document.createElement('script');
+    journeyScript.src = 'order-trace-loader.js';
+    document.body.appendChild(journeyScript);
+  }
 })();
