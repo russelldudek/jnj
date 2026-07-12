@@ -226,6 +226,8 @@
     "all_eight_stages_in_frame": true,
     "decision_panel_1280_regression": true,
     "all_routes_desktop_mobile_render_review": true,
-    "document_mobile_overflow_regression": true
+    "document_mobile_overflow_regression": true,
+    "document_mobile_header_overflow_regression": true,
+    "production_wrapper_asset_chain": true
   }
 }

@@ -11,6 +11,13 @@
 }
 
 @media (max-width: 620px) {
+  .site-header { gap: .7rem; }
+  .site-header .brand { min-width: 0; flex: 1 1 auto; }
+  .site-header .candidate-qualifier { display: none; }
+  .site-header .company-wordmark strong { font-size: .95rem; }
+  .site-header .company-wordmark em { font-size: .72rem; }
+  .nav-toggle { flex: 0 0 auto; }
+
   .trace-mini {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

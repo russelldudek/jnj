@@ -7,18 +7,37 @@
     "The progress trace and diamond marker were positioned at fixed top offsets inside the same vertical band used by checkpoint summary text.",
     "At 1280px the five-column decision grid exceeded the available workspace width because its responsive breakpoint stopped at 1260px.",
     "At 1280px the 930px minimum journey rail clipped the eighth checkpoint from the visible workspace.",
-    "The Interview Thesis Brief trace-mini sequence had no wrapping model, causing mobile horizontal overflow."
+    "The Interview Thesis Brief trace-mini sequence had no wrapping model, causing mobile horizontal overflow.",
+    "Document routes lacked the mobile header constraints already present in the journey stylesheet, allowing the Menu control to extend 36px beyond a 390px viewport."
   ],
   "repairs": [
     "Created a dedicated flow lane below all checkpoint text and moved the progress line, dashed trace, and diamond marker into it.",
     "Extended the compact desktop composition through 1320px and reflowed the decision panel at 1280px.",
     "Removed the rail minimum width in the compact desktop range so all eight checkpoints remain in frame.",
     "Added a wrapping, two-column mobile treatment for trace-mini document sequences.",
-    "Added a small app wrapper that loads the existing app core and appends versioned visual-QA styles after the journey runtime."
+    "Added a small app wrapper that loads the existing app core and appends versioned visual-QA styles after the journey runtime.",
+    "Promoted mobile header constraints into the cross-route visual-QA layer so every document route keeps the company lockup and Menu control in frame."
   ],
   "order_trace_matrix": {
-    "viewports": ["1536x1024", "1440x900", "1280x800", "960x1024", "768x1024", "620x900", "390x844"],
-    "stages": ["commitment", "validation", "availability", "delivery", "invoice", "payment", "learning", "reuse"],
+    "viewports": [
+      "1536x1024",
+      "1440x900",
+      "1280x800",
+      "960x1024",
+      "768x1024",
+      "620x900",
+      "390x844"
+    ],
+    "stages": [
+      "commitment",
+      "validation",
+      "availability",
+      "delivery",
+      "invoice",
+      "payment",
+      "learning",
+      "reuse"
+    ],
     "stage_states_tested": 56,
     "checks": {
       "marker_text_collision": true,
@@ -35,7 +54,12 @@
   },
   "interaction": {
     "mouse_selection": true,
-    "keyboard": ["ArrowLeft", "ArrowRight", "Home", "End"],
+    "keyboard": [
+      "ArrowLeft",
+      "ArrowRight",
+      "Home",
+      "End"
+    ],
     "reduced_motion": {
       "marker_transition": "0s",
       "progress_transition": "0s",
@@ -44,15 +68,27 @@
     }
   },
   "rendered_routes": {
-    "viewports": ["1440x900", "390x844"],
-    "routes": ["index.html", "resume.html", "cover-letter.html", "interview-brief.html", "120-day-plan.html", "otc-exception-portfolio.html"],
+    "viewports": [
+      "1440x900",
+      "390x844"
+    ],
+    "routes": [
+      "index.html",
+      "resume.html",
+      "cover-letter.html",
+      "interview-brief.html",
+      "120-day-plan.html",
+      "otc-exception-portfolio.html"
+    ],
     "checks": {
       "visible_h1": true,
       "page_horizontal_overflow": false,
       "mobile_navigation_opens": true,
       "document_sheets_render": true,
       "download_pdf_controls_visible": true,
-      "console_errors": false
+      "console_errors": false,
+      "mobile_header_in_frame": true,
+      "production_wrapper_asset_chain": true
     }
   },
   "source_routes": {

@@ -17,17 +17,27 @@
     "green": "The marker-clearance test passes after moving the packet into the dedicated lane."
   },
   "coverage": {
-    "viewports": ["1536x1024", "1440x900", "1280x800", "960x1024", "768x1024", "620x900", "390x844"],
+    "viewports": [
+      "1536x1024",
+      "1440x900",
+      "1280x800",
+      "960x1024",
+      "768x1024",
+      "620x900",
+      "390x844"
+    ],
     "lifecycle_stages": 8,
     "stage_viewport_combinations": 56,
     "all_stage_text_and_node_collision_checks": true,
     "decision_panel_geometry_checks": true,
-    "all_route_desktop_and_mobile_render_checks": true
+    "all_route_desktop_and_mobile_render_checks": true,
+    "production_wrapper_asset_chain": true
   },
   "additional_defects_found_and_fixed": [
     "1280px decision-panel overflow",
     "1280px eighth-checkpoint clipping",
-    "Interview Thesis Brief mobile trace overflow"
+    "Interview Thesis Brief mobile trace overflow",
+    "All document routes: mobile Menu control extended beyond the 390px viewport"
   ],
   "campaign_state": "blocked",
   "remaining_gate": "Live GitHub Pages verification."
