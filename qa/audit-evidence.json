@@ -1,7 +1,7 @@
 {
   "campaign_state": "blocked",
   "remaining_gate": "GitHub Pages deployment and live repository-path verification",
-  "blocker": "The available GitHub connector cannot enable or inspect Pages, and the intended live URL could not be resolved through the available external network path.",
+  "blocker": "The available GitHub connector cannot enable or inspect Pages, and the redesigned live URL could not be verified through the available external network path.",
   "files": {
     "index.html": true,
     "resume.html": true,
@@ -13,12 +13,18 @@
     "brand-tokens.css": true,
     "styles.css": true,
     "app.js": true,
+    "order-trace-loader.js": true,
+    "order-trace-journey.css": true,
+    "order-trace-journey.js": true,
     "assets/order-trace-mark.svg": true,
     "assets/brand/README.md": true,
     "README.md": true,
     "research-notes.md": true,
     "artifact-manifest.json": true,
-    "campaign-metadata.json": true
+    "campaign-metadata.json": true,
+    "docs/superpowers/specs/2026-07-12-order-trace-journey-design.md": true,
+    "docs/superpowers/plans/2026-07-12-order-trace-journey.md": true,
+    "qa/order-trace-journey-report.json": true
   },
   "links": {
     "index.html": {"bad": [], "download_pdf": true},
@@ -35,12 +41,18 @@
     "docs/russell-dudek-jnj-120-day-plan.pdf": {"pages": 3, "expected": 3, "pass": true},
     "docs/russell-dudek-jnj-otc-exception-portfolio.pdf": {"pages": 2, "expected": 2, "pass": true}
   },
-  "browser": {
-    "desktop": {"scrollWidth": 1440, "clientWidth": 1440, "overflow": false, "stageKeyboard": "Invoice", "scenarioKeyboard": "Invoice is disputed", "activeTag": "BUTTON"},
-    "laptop": {"scrollWidth": 1280, "clientWidth": 1280, "overflow": false},
-    "tablet": {"scrollWidth": 768, "clientWidth": 768, "overflow": false},
-    "mobile": {"scrollWidth": 390, "clientWidth": 390, "overflow": false, "navOpened": true},
-    "reduced": {"laneAnimation": "none", "scrollBehavior": "auto"}
+  "order_trace_journey_browser": {
+    "renderer": "Playwright Python with system Chromium",
+    "desktop": {"scrollWidth": 1440, "clientWidth": 1440, "overflow": false, "railWidth": 952, "railClientWidth": 952},
+    "laptop": {"scrollWidth": 1280, "clientWidth": 1280, "overflow": false, "railWidth": 930, "railClientWidth": 846},
+    "tablet": {"scrollWidth": 768, "clientWidth": 768, "overflow": false, "railWidth": 930, "railClientWidth": 720},
+    "mobile": {"scrollWidth": 390, "clientWidth": 390, "overflow": false, "railWidth": 820, "railClientWidth": 350},
+    "intentional_horizontal_scroll": "Journey rail only",
+    "initial_stage": "Validation",
+    "stage_count": 8,
+    "keyboard": {"ArrowRight": true, "ArrowLeft": true, "Home": true, "End": true},
+    "stage_transition": {"selected": "Invoice", "position_label": "Decision 5 of 8"},
+    "reduced": {"packetTransitionDuration": "0s", "contentUsable": true}
   },
   "brand_fidelity": {
     "visible_company_identity": true,
@@ -53,8 +65,9 @@
   },
   "source_and_pdf_main_verification": true,
   "canonical_campaign_records": true,
+  "order_trace_journey_local_render_pass": true,
   "live_deployment_verified": false,
   "pass": false,
-  "failures": ["Live GitHub Pages routes, reciprocal navigation, employer identity, motion, and PDF downloads have not yet been verified"],
+  "failures": ["The redesigned GitHub Pages runtime, live reciprocal navigation, employer identity, motion, and PDF downloads have not yet been verified after the latest main commit"],
   "reciprocal": {"resume_to_cover": true, "cover_to_resume": true, "toolbar_no_print": true}
 }
