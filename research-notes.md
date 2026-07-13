@@ -4,7 +4,7 @@
 
 Original posting: https://www.careers.jnj.com/en/jobs/r-087466/director-medtech-digital-factory-otc/?source=LinkedIn
 
-The public posting URL is preserved. Its full body was not retrievable during reconstruction. The role title is therefore treated as confirmed by the URL and conversation, while detailed internal responsibilities remain hypotheses for discovery.
+The role title is confirmed by the supplied posting and campaign context. OTC is treated as Order-to-Cash as an operating assumption to validate during discovery; detailed recommendations remain hypotheses until tested against J&J's internal mandate, process boundaries, and decision rights.
 
 ## Company moment
 
