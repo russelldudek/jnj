@@ -51,11 +51,15 @@ jobs:
           cat /tmp/jnj-site.log
           exit 1
       - name: Run complete rendered-site audit
+        id: site_audit
+        continue-on-error: true
         env:
           AUDIT_BASE_URL: http://127.0.0.1:4173/
           AUDIT_OUTPUT: qa/public-site-audit
         run: node scripts/full-site-public-audit.mjs
       - name: Audit every generated PDF
+        id: pdf_audit
+        continue-on-error: true
         run: |
           python3 - <<'PY'
           import json
@@ -90,6 +94,7 @@ jobs:
               text_file = pathlib.Path('/tmp') / (pdf.stem + '.txt')
               subprocess.run(['pdftotext', '-layout', str(pdf), str(text_file)], check=True)
               text = text_file.read_text(errors='replace')
+              flat = text.replace('\n', '')
               lower = text.lower()
               forbidden = []
               if internal.lower() in lower:
@@ -101,13 +106,9 @@ jobs:
                   findings.append(f'{file_name}: expected {expected_pages} pages, found {pages}')
               if forbidden:
                   findings.append(f'{file_name}: forbidden text {forbidden}')
-              if file_name.endswith('resume.pdf'):
+              if file_name.endswith('resume.pdf') or file_name.endswith('cover-letter.pdf'):
                   for required in ['412.287.8640', 'russelldudek@gmail.com', 'linkedin.com/in/russelldudek', 'russelldudek.github.io/jnj/']:
-                      if required not in text.replace('\n',''):
-                          findings.append(f'{file_name}: missing {required}')
-              if file_name.endswith('cover-letter.pdf'):
-                  for required in ['412.287.8640', 'russelldudek@gmail.com', 'linkedin.com/in/russelldudek', 'russelldudek.github.io/jnj/']:
-                      if required not in text.replace('\n',''):
+                      if required not in flat:
                           findings.append(f'{file_name}: missing {required}')
               prefix = render_dir / pdf.stem
               subprocess.run(['pdftoppm', '-png', '-r', '144', str(pdf), str(prefix)], check=True, stdout=subprocess.DEVNULL)
@@ -129,6 +130,7 @@ jobs:
               sys.exit(1)
           PY
       - name: Upload full-site QA evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jnj-full-public-site-qa
@@ -141,12 +143,31 @@ jobs:
             docs/*.pdf
           retention-days: 14
       - name: Commit sanitized campaign and QA records
+        if: always()
         run: |
           rm -rf qa/public-site-audit qa/pdf-public-audit-renders
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "Remove internal language and complete full-site QA [skip site-audit] [skip doc-build]"
+            git commit -m "Remove internal language and record full-site QA [skip site-audit] [skip doc-build]"
             git push
           fi
+      - name: Enforce audit result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          findings = []
+          for report_name in ['qa/full-site-public-audit.json', 'qa/pdf-public-audit.json']:
+              report_path = pathlib.Path(report_name)
+              if not report_path.exists():
+                  findings.append(f'{report_name} was not produced')
+                  continue
+              report = json.loads(report_path.read_text())
+              if not report.get('pass'):
+                  findings.extend(report.get('findings', [f'{report_name} failed']))
+          if findings:
+              print('\n'.join(findings))
+              sys.exit(1)
+          PY
