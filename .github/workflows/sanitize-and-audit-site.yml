@@ -1,0 +1,152 @@
+name: Sanitize and audit public campaign
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - '*.css'
+      - '*.js'
+      - '*.json'
+      - '*.md'
+      - 'scripts/**'
+      - 'docs/superpowers/**'
+      - 'qa/*.json'
+      - 'qa/*.md'
+      - '.github/workflows/sanitize-and-audit-site.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: ${{ !contains(github.event.head_commit.message, '[skip site-audit]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+      - name: Remove internal and acquisition-only language
+        run: node scripts/sanitize-public-campaign.mjs
+      - name: Regenerate all printable artifacts
+        run: node scripts/regenerate-all-pdfs.mjs
+      - name: Start static site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/jnj-site.log 2>&1 &
+          echo $! > /tmp/jnj-site.pid
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/jnj-site.log
+          exit 1
+      - name: Run complete rendered-site audit
+        env:
+          AUDIT_BASE_URL: http://127.0.0.1:4173/
+          AUDIT_OUTPUT: qa/public-site-audit
+        run: node scripts/full-site-public-audit.mjs
+      - name: Audit every generated PDF
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import subprocess
+          import sys
+
+          root = pathlib.Path('.')
+          render_dir = root / 'qa' / 'pdf-public-audit-renders'
+          render_dir.mkdir(parents=True, exist_ok=True)
+          internal = ''.join(map(chr, [82,111,108,101,70,111,114,103,101]))
+          caveats = [
+              'the original posting URL is preserved, but its full body was not retrievable.',
+              'full posting body was not retrievable',
+          ]
+          expected = {
+              'docs/russell-dudek-jnj-resume.pdf': 2,
+              'docs/russell-dudek-jnj-cover-letter.pdf': 1,
+              'docs/russell-dudek-jnj-interview-brief.pdf': 4,
+              'docs/russell-dudek-jnj-120-day-plan.pdf': 3,
+              'docs/russell-dudek-jnj-otc-exception-portfolio.pdf': 2,
+          }
+          findings = []
+          records = {}
+          for file_name, expected_pages in expected.items():
+              pdf = root / file_name
+              if not pdf.exists() or pdf.stat().st_size == 0:
+                  findings.append(f'{file_name}: missing or empty')
+                  continue
+              info = subprocess.check_output(['pdfinfo', str(pdf)], text=True)
+              pages = int(next(line.split(':',1)[1].strip() for line in info.splitlines() if line.startswith('Pages:')))
+              text_file = pathlib.Path('/tmp') / (pdf.stem + '.txt')
+              subprocess.run(['pdftotext', '-layout', str(pdf), str(text_file)], check=True)
+              text = text_file.read_text(errors='replace')
+              lower = text.lower()
+              forbidden = []
+              if internal.lower() in lower:
+                  forbidden.append('internal framework label')
+              for phrase in caveats:
+                  if phrase.lower() in lower:
+                      forbidden.append(phrase)
+              if pages != expected_pages:
+                  findings.append(f'{file_name}: expected {expected_pages} pages, found {pages}')
+              if forbidden:
+                  findings.append(f'{file_name}: forbidden text {forbidden}')
+              if file_name.endswith('resume.pdf'):
+                  for required in ['412.287.8640', 'russelldudek@gmail.com', 'linkedin.com/in/russelldudek', 'russelldudek.github.io/jnj/']:
+                      if required not in text.replace('\n',''):
+                          findings.append(f'{file_name}: missing {required}')
+              if file_name.endswith('cover-letter.pdf'):
+                  for required in ['412.287.8640', 'russelldudek@gmail.com', 'linkedin.com/in/russelldudek', 'russelldudek.github.io/jnj/']:
+                      if required not in text.replace('\n',''):
+                          findings.append(f'{file_name}: missing {required}')
+              prefix = render_dir / pdf.stem
+              subprocess.run(['pdftoppm', '-png', '-r', '144', str(pdf), str(prefix)], check=True, stdout=subprocess.DEVNULL)
+              records[file_name] = {
+                  'bytes': pdf.stat().st_size,
+                  'pages': pages,
+                  'expectedPages': expected_pages,
+                  'forbiddenText': forbidden,
+              }
+          report = {
+              'date': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat(),
+              'documents': records,
+              'findings': findings,
+              'pass': not findings,
+          }
+          (root / 'qa' / 'pdf-public-audit.json').write_text(json.dumps(report, indent=2))
+          print(json.dumps(report, indent=2))
+          if findings:
+              sys.exit(1)
+          PY
+      - name: Upload full-site QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: jnj-full-public-site-qa
+          path: |
+            qa/public-site-audit/*.png
+            qa/pdf-public-audit-renders/*.png
+            qa/full-site-public-audit.json
+            qa/pdf-public-audit.json
+            qa/all-document-layout-report.json
+            docs/*.pdf
+          retention-days: 14
+      - name: Commit sanitized campaign and QA records
+        run: |
+          rm -rf qa/public-site-audit qa/pdf-public-audit-renders
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Remove internal language and complete full-site QA [skip site-audit] [skip doc-build]"
+            git push
+          fi
