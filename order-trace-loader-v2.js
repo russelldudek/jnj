@@ -2,7 +2,7 @@
   if (!document.querySelector('link[data-order-trace-journey-style]')) {
     const journeyStyles = document.createElement('link');
     journeyStyles.rel = 'stylesheet';
-    journeyStyles.href = 'order-trace-journey.css?v=20260712-clipfix1';
+    journeyStyles.href = 'order-trace-journey.css?v=20260713-publicqa2';
     journeyStyles.dataset.orderTraceJourneyStyle = 'true';
     document.head.appendChild(journeyStyles);
   }
@@ -19,7 +19,6 @@
         <p class="lead">A MedTech Digital Factory should convert recurring friction into governed process products — making every exception visible, every decision accountable, and every improvement reusable.</p>
         <div class="role-line">Director, MedTech Digital Factory - OTC<span>Johnson &amp; Johnson MedTech | Candidate vision by Russell Dudek</span></div>
         <div class="hero-actions"><a class="btn primary" href="#simulator">Explore the operating model</a><a class="btn light" href="resume.html">View role-aligned resume</a></div>
-        <p class="source-note" style="margin-top:1rem"><span class="hypothesis">Working hypothesis</span> OTC refers to Order-to-Cash; the original posting URL is preserved, but its full body was not retrievable.</p>
         <div class="journey-value-list" aria-label="Value created by the Order Trace">
           <div class="journey-value"><b>01</b><div><strong>Protect commitments</strong><span>Keep the customer promise visible across every handoff.</span></div></div>
           <div class="journey-value"><b>02</b><div><strong>Reduce recurrence</strong><span>Intervene where friction begins, not only where it surfaces.</span></div></div>
@@ -68,7 +67,7 @@
 
   if (!document.querySelector('script[data-order-trace-journey-script]')) {
     const journeyScript = document.createElement('script');
-    journeyScript.src = 'order-trace-journey.js?v=20260712-clipfix1';
+    journeyScript.src = 'order-trace-journey.js?v=20260713-publicqa2';
     journeyScript.dataset.orderTraceJourneyScript = 'true';
     document.body.appendChild(journeyScript);
   }
