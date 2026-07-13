@@ -58,7 +58,7 @@ jobs:
           }
           await browser.close();
           NODE
-      - name: Verify page counts, text, and PDF hyperlinks
+      - name: Verify and render document previews
         run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils
@@ -76,10 +76,14 @@ jobs:
           test "$cover_text_count" -ge 3
           test "$resume_url_count" -ge 2
           test "$cover_url_count" -ge 2
-          mkdir -p qa
+          mkdir -p qa/document-vision-previews
+          pdftoppm -png -r 144 docs/russell-dudek-jnj-resume.pdf qa/document-vision-previews/resume >/dev/null
+          pdftoppm -png -r 144 docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-previews/cover-letter >/dev/null
           cat > qa/document-vision-link-report.json <<JSON
           {
             "date": "$(date -u +%F)",
+            "workflow_run_id": "${GITHUB_RUN_ID}",
+            "artifact_name": "document-vision-link-qa",
             "resume": {
               "pages": $resume_pages,
               "vision_text_occurrences": $resume_text_count,
@@ -96,6 +100,16 @@ jobs:
             "pass": true
           }
           JSON
+      - name: Upload rendered QA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: document-vision-link-qa
+          path: |
+            docs/russell-dudek-jnj-resume.pdf
+            docs/russell-dudek-jnj-cover-letter.pdf
+            qa/document-vision-previews/*.png
+            qa/document-vision-link-report.json
+          retention-days: 14
       - name: Commit generated documents
         run: |
           git config user.name "github-actions[bot]"
