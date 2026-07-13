@@ -11,7 +11,7 @@
   "campaign_state": "blocked",
   "blocker": "The available GitHub connector cannot enable or inspect GitHub Pages, and the expected live URL has not been verified from the deployed repository path.",
   "working_hypotheses": [
-    "OTC is treated as Order-to-Cash because the full public posting body was not retrievable."
+    "OTC is treated as Order-to-Cash and should be validated during discovery against J&J's internal mandate and process boundaries."
   ],
   "candidate_thesis": "A Digital Factory should convert recurring OTC friction into governed process products - making every order explainable, every exception visible, and every improvement reusable.",
   "visual_system": "The Order Trace",
