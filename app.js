@@ -1,5 +1,5 @@
 (() => {
-  const version = '20260712-visualqa3';
+  const version = '20260713-publicqa1';
 
   const appendStylesheet = (href, datasetKey) => {
     if (document.querySelector(`link[data-${datasetKey}]`)) return;
@@ -27,7 +27,7 @@
 
   const core = document.createElement('script');
   core.src = `app-core.js?v=${version}`;
-  core.dataset.roleforgeAppCore = 'true';
+  core.dataset.campaignAppCore = 'true';
   core.addEventListener('error', () => observer.disconnect());
   document.body.appendChild(core);
 })();
