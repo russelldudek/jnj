@@ -29,9 +29,10 @@ jobs:
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
-          import { mkdir, readFile } from 'node:fs/promises';
+          import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
           await mkdir('docs', { recursive: true });
+          await mkdir('qa', { recursive: true });
           const tokens = await readFile('brand-tokens.css', 'utf8');
           const styles = await readFile('styles.css', 'utf8');
           const inline = html => html
@@ -40,6 +41,7 @@ jobs:
             .replace(/<script src="app\.js"><\/script>/, '');
 
           const browser = await chromium.launch({ headless: true });
+          const layout = {};
           for (const [route, output] of [
             ['resume.html', 'docs/russell-dudek-jnj-resume.pdf'],
             ['cover-letter.html', 'docs/russell-dudek-jnj-cover-letter.pdf']
@@ -47,6 +49,32 @@ jobs:
             const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
             await page.setContent(inline(await readFile(route, 'utf8')), { waitUntil: 'load' });
             await page.emulateMedia({ media: 'print' });
+            const sheets = await page.evaluate(() => [...document.querySelectorAll('.sheet')].map((sheet, index) => {
+              const sheetRect = sheet.getBoundingClientRect();
+              const reservedSelector = '.page-number,.doc-id,.footer-source';
+              const flowChildren = [...sheet.children].filter(element => !element.matches(reservedSelector));
+              const reserved = [...sheet.querySelectorAll(reservedSelector)];
+              const contentBottom = Math.max(sheetRect.top, ...flowChildren.map(element => element.getBoundingClientRect().bottom));
+              const reservedTop = reserved.length
+                ? Math.min(...reserved.map(element => element.getBoundingClientRect().top))
+                : sheetRect.bottom;
+              return {
+                page: index + 1,
+                clientWidth: sheet.clientWidth,
+                scrollWidth: sheet.scrollWidth,
+                clientHeight: sheet.clientHeight,
+                scrollHeight: sheet.scrollHeight,
+                overflowX: sheet.scrollWidth > sheet.clientWidth + 1,
+                overflowY: sheet.scrollHeight > sheet.clientHeight + 1,
+                contentClearancePx: Number((reservedTop - contentBottom).toFixed(2))
+              };
+            }));
+            for (const sheet of sheets) {
+              if (sheet.overflowX || sheet.overflowY || sheet.contentClearancePx < 0) {
+                throw new Error(`${route} page ${sheet.page} failed print geometry: ${JSON.stringify(sheet)}`);
+              }
+            }
+            layout[route] = sheets;
             await page.pdf({
               path: output,
               format: 'Letter',
@@ -56,6 +84,11 @@ jobs:
             });
             await page.close();
           }
+          await writeFile('qa/document-layout-report.json', JSON.stringify({
+            date: new Date().toISOString().slice(0, 10),
+            routes: layout,
+            pass: true
+          }, null, 2));
           await browser.close();
           NODE
       - name: Verify and render document previews
@@ -70,12 +103,32 @@ jobs:
           pdftotext -layout docs/russell-dudek-jnj-cover-letter.pdf /tmp/cover.txt
           resume_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/resume.txt | wc -l)
           cover_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/cover.txt | wc -l)
+          resume_phone_count=$(grep -o '412.287.8640' /tmp/resume.txt | wc -l)
+          cover_phone_count=$(grep -o '412.287.8640' /tmp/cover.txt | wc -l)
+          resume_email_count=$(grep -o 'russelldudek@gmail.com' /tmp/resume.txt | wc -l)
+          cover_email_count=$(grep -o 'russelldudek@gmail.com' /tmp/cover.txt | wc -l)
+          resume_linkedin_count=$(grep -o 'linkedin.com/in/russelldudek' /tmp/resume.txt | wc -l)
+          cover_linkedin_count=$(grep -o 'linkedin.com/in/russelldudek' /tmp/cover.txt | wc -l)
           resume_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
           cover_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
+          resume_email_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'mailto:russelldudek@gmail.com' || true)
+          cover_email_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'mailto:russelldudek@gmail.com' || true)
+          resume_linkedin_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'https://www.linkedin.com/in/russelldudek/' || true)
+          cover_linkedin_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'https://www.linkedin.com/in/russelldudek/' || true)
           test "$resume_text_count" -ge 4
           test "$cover_text_count" -ge 3
+          test "$resume_phone_count" -ge 2
+          test "$cover_phone_count" -ge 1
+          test "$resume_email_count" -ge 2
+          test "$cover_email_count" -ge 1
+          test "$resume_linkedin_count" -ge 2
+          test "$cover_linkedin_count" -ge 1
           test "$resume_url_count" -ge 2
           test "$cover_url_count" -ge 2
+          test "$resume_email_url_count" -ge 2
+          test "$cover_email_url_count" -ge 1
+          test "$resume_linkedin_url_count" -ge 2
+          test "$cover_linkedin_url_count" -ge 1
           mkdir -p qa/document-vision-previews
           pdftoppm -png -r 144 docs/russell-dudek-jnj-resume.pdf qa/document-vision-previews/resume >/dev/null
           pdftoppm -png -r 144 docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-previews/cover-letter >/dev/null
@@ -83,39 +136,51 @@ jobs:
           {
             "date": "$(date -u +%F)",
             "workflow_run_id": "${GITHUB_RUN_ID}",
-            "artifact_name": "document-vision-link-qa",
+            "artifact_name": "document-contact-vision-qa",
             "resume": {
               "pages": $resume_pages,
               "vision_text_occurrences": $resume_text_count,
               "vision_pdf_hyperlinks": $resume_url_count,
-              "header_link_on_each_page": true
+              "phone_text_occurrences": $resume_phone_count,
+              "email_text_occurrences": $resume_email_count,
+              "linkedin_text_occurrences": $resume_linkedin_count,
+              "email_pdf_hyperlinks": $resume_email_url_count,
+              "linkedin_pdf_hyperlinks": $resume_linkedin_url_count,
+              "contact_and_vision_header_on_each_page": true
             },
             "cover_letter": {
               "pages": $cover_pages,
               "vision_text_occurrences": $cover_text_count,
               "vision_pdf_hyperlinks": $cover_url_count,
-              "header_link": true,
-              "body_link": true
+              "phone_text_occurrences": $cover_phone_count,
+              "email_text_occurrences": $cover_email_count,
+              "linkedin_text_occurrences": $cover_linkedin_count,
+              "email_pdf_hyperlinks": $cover_email_url_count,
+              "linkedin_pdf_hyperlinks": $cover_linkedin_url_count,
+              "contact_and_vision_header": true,
+              "vision_body_link": true
             },
+            "print_geometry_report": "qa/document-layout-report.json",
             "pass": true
           }
           JSON
       - name: Upload rendered QA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: document-vision-link-qa
+          name: document-contact-vision-qa
           path: |
             docs/russell-dudek-jnj-resume.pdf
             docs/russell-dudek-jnj-cover-letter.pdf
             qa/document-vision-previews/*.png
             qa/document-vision-link-report.json
+            qa/document-layout-report.json
           retention-days: 14
       - name: Commit generated documents
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/russell-dudek-jnj-resume.pdf docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-link-report.json
+          git add docs/russell-dudek-jnj-resume.pdf docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-link-report.json qa/document-layout-report.json
           if ! git diff --cached --quiet; then
-            git commit -m "Regenerate application PDFs with vision links [skip doc-build]"
+            git commit -m "Regenerate application PDFs with contact and vision links [skip doc-build]"
             git push
           fi
