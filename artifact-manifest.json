@@ -37,6 +37,7 @@
     {"path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true, "footer_collision_repaired": true}
   ],
   "qa_evidence": [
+    {"path": "qa/candidate-facing-confidentiality.json", "verified_on_main": true, "status": "main source and PDFs passed; live deployment pending"},
     {"path": "qa/public-content-sanitization.json", "verified_on_main": true},
     {"path": "qa/full-site-public-audit-summary.json", "verified_on_main": true},
     {"path": "qa/pdf-public-audit.json", "verified_on_main": true},
@@ -51,6 +52,7 @@
     "brand_fidelity_source_and_rendered_artifacts": true,
     "visible_company_identity": true,
     "independent_candidate_distinction": true,
+    "candidate_facing_confidentiality_main_and_pdfs": true,
     "public_content_sanitization": true,
     "no_internal_framework_name_in_public_source_or_rendered_artifacts": true,
     "no_job_acquisition_caveat_in_public_artifacts": true,
@@ -72,6 +74,7 @@
     "cover_letter_contact_information_in_header": true,
     "generated_pdf_contact_and_candidate_vision_links": true,
     "live_pages_deployment": false,
-    "live_route_verification": false
+    "live_route_verification": false,
+    "candidate_facing_confidentiality_live": false
   }
 }
