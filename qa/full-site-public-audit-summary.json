@@ -1,0 +1,26 @@
+{
+  "date": "2026-07-13T04:13:45Z",
+  "renderer": "Chromium via Playwright",
+  "routes": ["index.html", "resume.html", "cover-letter.html", "interview-brief.html", "120-day-plan.html", "otc-exception-portfolio.html"],
+  "viewports": ["1440x900", "1280x800", "768x1024", "390x844"],
+  "route_viewport_checks": 24,
+  "checks": {
+    "page_level_horizontal_overflow": false,
+    "duplicate_ids": false,
+    "console_errors": false,
+    "broken_local_navigation": false,
+    "mobile_navigation": true,
+    "document_mobile_reflow": true,
+    "download_controls_visible": true,
+    "resume_cover_reciprocal_navigation": true,
+    "marker_text_collision": false,
+    "exception_canvas_footer_collision": false,
+    "journey_states": "8 of 8 passed",
+    "simulator_states": "5 of 5 passed",
+    "keyboard_navigation": true,
+    "reduced_motion": true,
+    "forbidden_public_text_findings": 0
+  },
+  "findings": [],
+  "pass": true
+}

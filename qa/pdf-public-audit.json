@@ -1,0 +1,13 @@
+{
+  "date": "2026-07-13T04:20:51Z",
+  "documents": {
+    "docs/russell-dudek-jnj-resume.pdf": {"pages": 2, "expected_pages": 2, "forbidden_text": []},
+    "docs/russell-dudek-jnj-cover-letter.pdf": {"pages": 1, "expected_pages": 1, "forbidden_text": []},
+    "docs/russell-dudek-jnj-interview-brief.pdf": {"pages": 4, "expected_pages": 4, "forbidden_text": []},
+    "docs/russell-dudek-jnj-120-day-plan.pdf": {"pages": 3, "expected_pages": 3, "forbidden_text": []},
+    "docs/russell-dudek-jnj-otc-exception-portfolio.pdf": {"pages": 2, "expected_pages": 2, "forbidden_text": []}
+  },
+  "rendered_pages_inspected": 12,
+  "findings": [],
+  "pass": true
+}

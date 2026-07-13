@@ -1,0 +1,25 @@
+{
+  "date": "2026-07-13",
+  "scope": "current public main source, six rendered routes, and five generated PDFs",
+  "removed": [
+    "job-posting retrieval caveat from fallback and active hero",
+    "acquisition-only caveat from the interview brief",
+    "internal campaign framework name from public campaign text and runtime naming"
+  ],
+  "source_scan": {
+    "files": 22,
+    "forbidden_findings": 0
+  },
+  "rendered_routes": {
+    "routes": 6,
+    "viewports": ["1440x900", "1280x800", "768x1024", "390x844"],
+    "checks": 24,
+    "forbidden_findings": 0
+  },
+  "pdfs": {
+    "files": 5,
+    "pages": 12,
+    "forbidden_findings": 0
+  },
+  "pass": true
+}
