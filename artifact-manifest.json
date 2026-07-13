@@ -27,7 +27,7 @@
     {"path": "order-trace-loader-v2.js", "verified_on_main": true, "status": "active clipping-safe runtime"},
     {"path": "order-trace-journey.css", "verified_on_main": true},
     {"path": "order-trace-journey.js", "verified_on_main": true},
-    {"path": ".github/workflows/build-candidate-documents.yml", "verified_on_main": true, "status": "regenerates and verifies application PDFs, page counts, visible URLs, hyperlink annotations, and rendered QA previews"},
+    {"path": ".github/workflows/build-candidate-documents.yml", "verified_on_main": true, "status": "regenerates and verifies application PDFs, exact page counts, visible contact and candidate-vision text, hyperlink annotations, print geometry reporting, and rendered QA previews"},
     {"path": "README.md", "verified_on_main": true},
     {"path": "research-notes.md", "verified_on_main": true}
   ],
@@ -38,8 +38,8 @@
     {"path": "docs/superpowers/plans/2026-07-12-order-trace-journey.md", "verified_on_main": true}
   ],
   "generated_documents": [
-    {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true, "candidate_vision_header_link_each_page": true},
-    {"path": "docs/russell-dudek-jnj-cover-letter.pdf", "pages": 1, "expected_pages": 1, "verified_on_main": true, "candidate_vision_header_link": true, "candidate_vision_body_link": true},
+    {"path": "docs/russell-dudek-jnj-resume.pdf", "pages": 2, "expected_pages": 2, "verified_on_main": true, "candidate_vision_header_link_each_page": true, "contact_header_each_page": true, "contact_fields": ["Pittsburgh, PA", "412.287.8640", "russelldudek@gmail.com", "linkedin.com/in/russelldudek"]},
+    {"path": "docs/russell-dudek-jnj-cover-letter.pdf", "pages": 1, "expected_pages": 1, "verified_on_main": true, "candidate_vision_header_link": true, "candidate_vision_body_link": true, "contact_header": true, "contact_fields": ["Pittsburgh, PA", "412.287.8640", "russelldudek@gmail.com", "linkedin.com/in/russelldudek"]},
     {"path": "docs/russell-dudek-jnj-interview-brief.pdf", "pages": 4, "verified_on_main": true},
     {"path": "docs/russell-dudek-jnj-120-day-plan.pdf", "pages": 3, "verified_on_main": true},
     {"path": "docs/russell-dudek-jnj-otc-exception-portfolio.pdf", "pages": 2, "verified_on_main": true}
@@ -49,7 +49,8 @@
     {"path": "qa/audit-evidence.json", "verified_on_main": true},
     {"path": "qa/order-trace-journey-report.json", "verified_on_main": true},
     {"path": "qa/full-site-regression-report.json", "verified_on_main": true},
-    {"path": "qa/document-vision-link-report.json", "verified_on_main": true, "status": "resume 2 pages with two PDF vision hyperlinks; cover letter 1 page with header and body vision hyperlinks"},
+    {"path": "qa/document-vision-link-report.json", "verified_on_main": true, "status": "resume 2 pages with contact and candidate-vision headers on both pages; cover letter 1 page with contact and candidate-vision header plus body link; email, LinkedIn, and vision hyperlinks verified"},
+    {"path": "qa/document-layout-report.json", "verified_on_main": true, "status": "print-canvas dimensions and footer clearance recorded for all three application pages; full-page PNG previews visually inspected with no clipping or overlap"},
     {"path": "qa/order-trace-clipping-regression.json", "verified_on_main": true, "status": "supersedes shallow collision audit"},
     {"path": "qa/brand-fidelity-audit.md", "verified_on_main": true},
     {"path": "qa/desktop-1440x900.png", "verified_on_main": true, "status": "pre-redesign baseline"},
@@ -75,7 +76,10 @@
     "resume_candidate_vision_link_in_each_header": true,
     "cover_letter_candidate_vision_link_in_header": true,
     "cover_letter_candidate_vision_link_in_body": true,
+    "resume_contact_information_in_each_header": true,
+    "cover_letter_contact_information_in_header": true,
     "generated_pdf_candidate_vision_hyperlinks": true,
+    "generated_pdf_contact_hyperlinks": true,
     "generated_pdf_render_preview_review": true,
     "pdf_downloads_committed": true,
     "live_pages_deployment": false,
