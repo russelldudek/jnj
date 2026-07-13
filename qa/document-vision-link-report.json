@@ -1,0 +1,17 @@
+{
+  "date": "2026-07-13",
+  "resume": {
+    "pages": 2,
+    "vision_text_occurrences": 4,
+    "vision_pdf_hyperlinks": 2,
+    "header_link_on_each_page": true
+  },
+  "cover_letter": {
+    "pages": 1,
+    "vision_text_occurrences": 3,
+    "vision_pdf_hyperlinks": 2,
+    "header_link": true,
+    "body_link": true
+  },
+  "pass": true
+}
