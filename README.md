@@ -1,6 +1,6 @@
 # Johnson & Johnson MedTech Digital Factory - OTC
 
-RoleForge candidate campaign for Russell Dudek.
+Independent candidate campaign for Russell Dudek.
 
 ## Campaign metadata
 
@@ -17,7 +17,7 @@ RoleForge candidate campaign for Russell Dudek.
 
 A Digital Factory should convert recurring OTC friction into governed process products - making every order explainable, every exception visible, and every improvement reusable.
 
-`OTC = Order-to-Cash` is labeled throughout as a working hypothesis because the original posting URL is preserved but its full body was not retrievable during reconstruction.
+OTC is treated as Order-to-Cash as an operating assumption to validate during discovery against J&J's internal mandate and process boundaries.
 
 ## Order Trace Journey
 
@@ -33,7 +33,7 @@ The redesigned experience uses:
 - complete reduced-motion behavior;
 - responsive horizontal rail behavior on laptop, tablet, and mobile without page-level overflow.
 
-The redesign is implemented through `order-trace-loader.js`, `order-trace-journey.css`, and `order-trace-journey.js`. Browser QA is recorded in `qa/order-trace-journey-report.json`.
+The redesign is implemented through `order-trace-loader-v2.js`, `order-trace-journey.css`, and `order-trace-journey.js`. Browser QA is recorded in the committed QA reports.
 
 ## Manifest
 
@@ -47,7 +47,8 @@ The redesign is implemented through `order-trace-loader.js`, `order-trace-journe
 - `brand-tokens.css`
 - `styles.css`
 - `app.js`
-- `order-trace-loader.js`
+- `app-core.js`
+- `order-trace-loader-v2.js`
 - `order-trace-journey.css`
 - `order-trace-journey.js`
 - `assets/order-trace-mark.svg`
@@ -60,7 +61,7 @@ The redesign is implemented through `order-trace-loader.js`, `order-trace-journe
 - `research-notes.md`
 - `artifact-manifest.json`
 - `campaign-metadata.json`
-- RoleForge design and implementation records under `docs/superpowers/`
+- Design and implementation records under `docs/superpowers/`
 - Rendered and audit evidence under `qa/`
 
 ## Brand fidelity
