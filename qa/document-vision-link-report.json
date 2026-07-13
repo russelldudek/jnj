@@ -1,19 +1,30 @@
 {
   "date": "2026-07-13",
-  "workflow_run_id": "29219690299",
-  "artifact_name": "document-vision-link-qa",
+  "workflow_run_id": "29220995736",
+  "artifact_name": "document-contact-vision-qa",
   "resume": {
     "pages": 2,
     "vision_text_occurrences": 4,
     "vision_pdf_hyperlinks": 2,
-    "header_link_on_each_page": true
+    "phone_text_occurrences": 2,
+    "email_text_occurrences": 2,
+    "linkedin_text_occurrences": 2,
+    "email_pdf_hyperlinks": 2,
+    "linkedin_pdf_hyperlinks": 2,
+    "contact_and_vision_header_on_each_page": true
   },
   "cover_letter": {
     "pages": 1,
     "vision_text_occurrences": 3,
     "vision_pdf_hyperlinks": 2,
-    "header_link": true,
-    "body_link": true
+    "phone_text_occurrences": 1,
+    "email_text_occurrences": 1,
+    "linkedin_text_occurrences": 1,
+    "email_pdf_hyperlinks": 1,
+    "linkedin_pdf_hyperlinks": 1,
+    "contact_and_vision_header": true,
+    "vision_body_link": true
   },
+  "print_geometry_report": "qa/document-layout-report.json",
   "pass": true
 }

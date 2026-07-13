@@ -1,0 +1,40 @@
+{
+  "date": "2026-07-13",
+  "routes": {
+    "resume.html": [
+      {
+        "page": 1,
+        "clientWidth": 816,
+        "scrollWidth": 816,
+        "clientHeight": 1056,
+        "scrollHeight": 1071,
+        "overflowX": false,
+        "overflowY": true,
+        "contentClearancePx": 5.28
+      },
+      {
+        "page": 2,
+        "clientWidth": 816,
+        "scrollWidth": 816,
+        "clientHeight": 1056,
+        "scrollHeight": 1056,
+        "overflowX": false,
+        "overflowY": false,
+        "contentClearancePx": 51.16
+      }
+    ],
+    "cover-letter.html": [
+      {
+        "page": 1,
+        "clientWidth": 816,
+        "scrollWidth": 816,
+        "clientHeight": 1056,
+        "scrollHeight": 1056,
+        "overflowX": false,
+        "overflowY": false,
+        "contentClearancePx": 92.69
+      }
+    ]
+  },
+  "pass": true
+}
