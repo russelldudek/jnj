@@ -1,0 +1,12 @@
+{
+  "date": "2026-07-13",
+  "status": "source_and_pdf_passed_live_pending",
+  "public_campaign_surface_scan": "passed",
+  "pdf_text_and_metadata_scan": "passed",
+  "forbidden_internal_name_matches": 0,
+  "filenames_and_directory_names": "passed",
+  "repository_description": "no conflicting description returned by the connected repository metadata check",
+  "current_public_commit_messages": "passed",
+  "live_deployment_verification": "pending",
+  "note": "The current main tree and generated downloads contain neutral candidate-owned language. Overall campaign completion remains blocked until the live Pages deployment is verified against the audited main head."
+}
