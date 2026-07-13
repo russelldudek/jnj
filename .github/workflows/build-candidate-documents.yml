@@ -1,178 +1,175 @@
-name: Build candidate documents
+name: Build and audit candidate campaign
 
 on:
   push:
     branches: [main]
     paths:
-      - resume.html
-      - cover-letter.html
-      - styles.css
-      - brand-tokens.css
-      - package.json
-      - .github/workflows/build-candidate-documents.yml
+      - '*.html'
+      - '*.css'
+      - '*.js'
+      - '*.json'
+      - '*.md'
+      - 'scripts/**'
+      - 'docs/superpowers/**'
+      - 'qa/*.json'
+      - 'qa/*.md'
+      - 'brand-tokens.css'
+      - 'package.json'
+      - '.github/workflows/build-candidate-documents.yml'
 
 permissions:
   contents: write
 
 jobs:
-  build-documents:
-    if: ${{ !contains(github.event.head_commit.message, '[skip doc-build]') }}
+  build-audit:
+    if: ${{ !contains(github.event.head_commit.message, '[skip campaign-audit]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - run: npm install
       - run: npx playwright install --with-deps chromium
-      - name: Generate resume and cover letter PDFs
-        run: |
-          node --input-type=module <<'NODE'
-          import { chromium } from 'playwright';
-          import { mkdir, readFile, writeFile } from 'node:fs/promises';
-
-          await mkdir('docs', { recursive: true });
-          await mkdir('qa', { recursive: true });
-          const tokens = await readFile('brand-tokens.css', 'utf8');
-          const styles = await readFile('styles.css', 'utf8');
-          const inline = html => html
-            .replace('<link rel="stylesheet" href="brand-tokens.css">', `<style>${tokens}</style>`)
-            .replace('<link rel="stylesheet" href="styles.css">', `<style>${styles}</style>`)
-            .replace(/<script src="app\.js"><\/script>/, '');
-
-          const browser = await chromium.launch({ headless: true });
-          const layout = {};
-          for (const [route, output] of [
-            ['resume.html', 'docs/russell-dudek-jnj-resume.pdf'],
-            ['cover-letter.html', 'docs/russell-dudek-jnj-cover-letter.pdf']
-          ]) {
-            const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-            await page.setContent(inline(await readFile(route, 'utf8')), { waitUntil: 'load' });
-            await page.emulateMedia({ media: 'print' });
-            layout[route] = await page.evaluate(() => [...document.querySelectorAll('.sheet')].map((sheet, index) => {
-              const sheetRect = sheet.getBoundingClientRect();
-              const reservedSelector = '.page-number,.doc-id,.footer-source';
-              const flowChildren = [...sheet.children].filter(element => !element.matches(reservedSelector));
-              const reserved = [...sheet.querySelectorAll(reservedSelector)];
-              const contentBottom = Math.max(sheetRect.top, ...flowChildren.map(element => element.getBoundingClientRect().bottom));
-              const reservedTop = reserved.length
-                ? Math.min(...reserved.map(element => element.getBoundingClientRect().top))
-                : sheetRect.bottom;
-              return {
-                page: index + 1,
-                clientWidth: sheet.clientWidth,
-                scrollWidth: sheet.scrollWidth,
-                clientHeight: sheet.clientHeight,
-                scrollHeight: sheet.scrollHeight,
-                overflowX: sheet.scrollWidth > sheet.clientWidth + 1,
-                overflowY: sheet.scrollHeight > sheet.clientHeight + 1,
-                contentClearancePx: Number((reservedTop - contentBottom).toFixed(2))
-              };
-            }));
-            await page.pdf({
-              path: output,
-              format: 'Letter',
-              printBackground: true,
-              preferCSSPageSize: true,
-              margin: { top: 0, right: 0, bottom: 0, left: 0 }
-            });
-            await page.close();
-          }
-          await writeFile('qa/document-layout-report.json', JSON.stringify({
-            date: new Date().toISOString().slice(0, 10),
-            routes: layout,
-            pass: true
-          }, null, 2));
-          await browser.close();
-          NODE
-      - name: Verify and render document previews
-        run: |
+      - run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils
-          resume_pages=$(pdfinfo docs/russell-dudek-jnj-resume.pdf | awk '/^Pages:/ {print $2}')
-          cover_pages=$(pdfinfo docs/russell-dudek-jnj-cover-letter.pdf | awk '/^Pages:/ {print $2}')
-          test "$resume_pages" = "2"
-          test "$cover_pages" = "1"
-          pdftotext -layout docs/russell-dudek-jnj-resume.pdf /tmp/resume.txt
-          pdftotext -layout docs/russell-dudek-jnj-cover-letter.pdf /tmp/cover.txt
-          tr -d '\n\r' < /tmp/resume.txt > /tmp/resume-flat.txt
-          tr -d '\n\r' < /tmp/cover.txt > /tmp/cover-flat.txt
-          resume_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/resume-flat.txt | wc -l)
-          cover_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/cover-flat.txt | wc -l)
-          resume_phone_count=$(grep -o '412.287.8640' /tmp/resume-flat.txt | wc -l)
-          cover_phone_count=$(grep -o '412.287.8640' /tmp/cover-flat.txt | wc -l)
-          resume_email_count=$(grep -o 'russelldudek@gmail.com' /tmp/resume-flat.txt | wc -l)
-          cover_email_count=$(grep -o 'russelldudek@gmail.com' /tmp/cover-flat.txt | wc -l)
-          resume_linkedin_count=$(grep -o 'linkedin.com/in/russelldudek' /tmp/resume-flat.txt | wc -l)
-          cover_linkedin_count=$(grep -o 'linkedin.com/in/russelldudek' /tmp/cover-flat.txt | wc -l)
-          resume_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
-          cover_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
-          resume_email_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'mailto:russelldudek@gmail.com' || true)
-          cover_email_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'mailto:russelldudek@gmail.com' || true)
-          resume_linkedin_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'https://www.linkedin.com/in/russelldudek/' || true)
-          cover_linkedin_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'https://www.linkedin.com/in/russelldudek/' || true)
-          test "$resume_text_count" -ge 4
-          test "$cover_text_count" -ge 3
-          test "$resume_phone_count" -ge 2
-          test "$cover_phone_count" -ge 1
-          test "$resume_email_count" -ge 2
-          test "$cover_email_count" -ge 1
-          test "$resume_linkedin_count" -ge 2
-          test "$cover_linkedin_count" -ge 1
-          test "$resume_url_count" -ge 2
-          test "$cover_url_count" -ge 2
-          mkdir -p qa/document-vision-previews
-          pdftoppm -png -r 144 docs/russell-dudek-jnj-resume.pdf qa/document-vision-previews/resume >/dev/null
-          pdftoppm -png -r 144 docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-previews/cover-letter >/dev/null
-          cat > qa/document-vision-link-report.json <<JSON
-          {
-            "date": "$(date -u +%F)",
-            "workflow_run_id": "${GITHUB_RUN_ID}",
-            "artifact_name": "document-contact-vision-qa",
-            "resume": {
-              "pages": $resume_pages,
-              "vision_text_occurrences": $resume_text_count,
-              "vision_pdf_hyperlinks": $resume_url_count,
-              "phone_text_occurrences": $resume_phone_count,
-              "email_text_occurrences": $resume_email_count,
-              "linkedin_text_occurrences": $resume_linkedin_count,
-              "email_pdf_hyperlinks": $resume_email_url_count,
-              "linkedin_pdf_hyperlinks": $resume_linkedin_url_count,
-              "contact_and_vision_header_on_each_page": true
-            },
-            "cover_letter": {
-              "pages": $cover_pages,
-              "vision_text_occurrences": $cover_text_count,
-              "vision_pdf_hyperlinks": $cover_url_count,
-              "phone_text_occurrences": $cover_phone_count,
-              "email_text_occurrences": $cover_email_count,
-              "linkedin_text_occurrences": $cover_linkedin_count,
-              "email_pdf_hyperlinks": $cover_email_url_count,
-              "linkedin_pdf_hyperlinks": $cover_linkedin_url_count,
-              "contact_and_vision_header": true,
-              "vision_body_link": true
-            },
-            "print_geometry_report": "qa/document-layout-report.json",
-            "pass": true
+      - name: Remove internal and acquisition-only language
+        run: node scripts/sanitize-public-campaign.mjs
+      - name: Regenerate all printable artifacts
+        run: node scripts/regenerate-all-pdfs.mjs
+      - name: Start static site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/jnj-site.log 2>&1 &
+          echo $! > /tmp/jnj-site.pid
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/jnj-site.log
+          exit 1
+      - name: Run complete rendered-site audit
+        id: site_audit
+        continue-on-error: true
+        env:
+          AUDIT_BASE_URL: http://127.0.0.1:4173/
+          AUDIT_OUTPUT: qa/public-site-audit
+        run: node scripts/full-site-public-audit.mjs
+      - name: Audit every generated PDF
+        id: pdf_audit
+        continue-on-error: true
+        run: |
+          python3 - <<'PY'
+          import json
+          import pathlib
+          import subprocess
+          import sys
+
+          root = pathlib.Path('.')
+          render_dir = root / 'qa' / 'pdf-public-audit-renders'
+          render_dir.mkdir(parents=True, exist_ok=True)
+          internal = ''.join(map(chr, [82,111,108,101,70,111,114,103,101]))
+          caveats = [
+              'the original posting URL is preserved, but its full body was not retrievable.',
+              'full posting body was not retrievable',
+          ]
+          expected = {
+              'docs/russell-dudek-jnj-resume.pdf': 2,
+              'docs/russell-dudek-jnj-cover-letter.pdf': 1,
+              'docs/russell-dudek-jnj-interview-brief.pdf': 4,
+              'docs/russell-dudek-jnj-120-day-plan.pdf': 3,
+              'docs/russell-dudek-jnj-otc-exception-portfolio.pdf': 2,
           }
-          JSON
-      - name: Upload rendered QA artifact
+          findings = []
+          records = {}
+          for file_name, expected_pages in expected.items():
+              pdf = root / file_name
+              if not pdf.exists() or pdf.stat().st_size == 0:
+                  findings.append(f'{file_name}: missing or empty')
+                  continue
+              info = subprocess.check_output(['pdfinfo', str(pdf)], text=True)
+              pages = int(next(line.split(':',1)[1].strip() for line in info.splitlines() if line.startswith('Pages:')))
+              text_file = pathlib.Path('/tmp') / (pdf.stem + '.txt')
+              subprocess.run(['pdftotext', '-layout', str(pdf), str(text_file)], check=True)
+              text = text_file.read_text(errors='replace')
+              flat = text.replace('\n', '')
+              lower = text.lower()
+              forbidden = []
+              if internal.lower() in lower:
+                  forbidden.append('internal framework label')
+              for phrase in caveats:
+                  if phrase.lower() in lower:
+                      forbidden.append(phrase)
+              if pages != expected_pages:
+                  findings.append(f'{file_name}: expected {expected_pages} pages, found {pages}')
+              if forbidden:
+                  findings.append(f'{file_name}: forbidden text {forbidden}')
+              if file_name.endswith('resume.pdf') or file_name.endswith('cover-letter.pdf'):
+                  for required in ['412.287.8640', 'russelldudek@gmail.com', 'linkedin.com/in/russelldudek', 'russelldudek.github.io/jnj/']:
+                      if required not in flat:
+                          findings.append(f'{file_name}: missing {required}')
+              prefix = render_dir / pdf.stem
+              subprocess.run(['pdftoppm', '-png', '-r', '144', str(pdf), str(prefix)], check=True, stdout=subprocess.DEVNULL)
+              records[file_name] = {
+                  'bytes': pdf.stat().st_size,
+                  'pages': pages,
+                  'expectedPages': expected_pages,
+                  'forbiddenText': forbidden,
+              }
+          report = {
+              'date': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat(),
+              'documents': records,
+              'findings': findings,
+              'pass': not findings,
+          }
+          (root / 'qa' / 'pdf-public-audit.json').write_text(json.dumps(report, indent=2))
+          print(json.dumps(report, indent=2))
+          if findings:
+              sys.exit(1)
+          PY
+      - name: Upload full-site QA evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: document-contact-vision-qa
+          name: jnj-full-public-site-qa
           path: |
-            docs/russell-dudek-jnj-resume.pdf
-            docs/russell-dudek-jnj-cover-letter.pdf
-            qa/document-vision-previews/*.png
-            qa/document-vision-link-report.json
-            qa/document-layout-report.json
+            qa/public-site-audit/*.png
+            qa/pdf-public-audit-renders/*.png
+            qa/full-site-public-audit.json
+            qa/pdf-public-audit.json
+            qa/all-document-layout-report.json
+            docs/*.pdf
           retention-days: 14
-      - name: Commit generated documents
+      - name: Commit sanitized campaign and QA records
+        if: always()
         run: |
+          rm -rf qa/public-site-audit qa/pdf-public-audit-renders
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/russell-dudek-jnj-resume.pdf docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-link-report.json qa/document-layout-report.json
+          git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "Regenerate application PDFs with contact and vision links [skip doc-build]"
+            git commit -m "Remove internal language and record full-site QA [skip campaign-audit] [skip site-audit] [skip doc-build]"
             git push
           fi
+      - name: Enforce audit result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          findings = []
+          for report_name in ['qa/full-site-public-audit.json', 'qa/pdf-public-audit.json']:
+              report_path = pathlib.Path(report_name)
+              if not report_path.exists():
+                  findings.append(f'{report_name} was not produced')
+                  continue
+              report = json.loads(report_path.read_text())
+              if not report.get('pass'):
+                  findings.extend(report.get('findings', [f'{report_name} failed']))
+          if findings:
+              print('\n'.join(findings))
+              sys.exit(1)
+          PY
