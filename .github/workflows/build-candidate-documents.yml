@@ -1,0 +1,107 @@
+name: Build candidate documents
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - resume.html
+      - cover-letter.html
+      - styles.css
+      - brand-tokens.css
+      - package.json
+      - .github/workflows/build-candidate-documents.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build-documents:
+    if: ${{ !contains(github.event.head_commit.message, '[skip doc-build]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Generate resume and cover letter PDFs
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          import { mkdir, readFile } from 'node:fs/promises';
+
+          await mkdir('docs', { recursive: true });
+          const tokens = await readFile('brand-tokens.css', 'utf8');
+          const styles = await readFile('styles.css', 'utf8');
+          const inline = html => html
+            .replace('<link rel="stylesheet" href="brand-tokens.css">', `<style>${tokens}</style>`)
+            .replace('<link rel="stylesheet" href="styles.css">', `<style>${styles}</style>`)
+            .replace(/<script src="app\.js"><\/script>/, '');
+
+          const browser = await chromium.launch({ headless: true });
+          for (const [route, output] of [
+            ['resume.html', 'docs/russell-dudek-jnj-resume.pdf'],
+            ['cover-letter.html', 'docs/russell-dudek-jnj-cover-letter.pdf']
+          ]) {
+            const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+            await page.setContent(inline(await readFile(route, 'utf8')), { waitUntil: 'load' });
+            await page.emulateMedia({ media: 'print' });
+            await page.pdf({
+              path: output,
+              format: 'Letter',
+              printBackground: true,
+              preferCSSPageSize: true,
+              margin: { top: 0, right: 0, bottom: 0, left: 0 }
+            });
+            await page.close();
+          }
+          await browser.close();
+          NODE
+      - name: Verify page counts, text, and PDF hyperlinks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          resume_pages=$(pdfinfo docs/russell-dudek-jnj-resume.pdf | awk '/^Pages:/ {print $2}')
+          cover_pages=$(pdfinfo docs/russell-dudek-jnj-cover-letter.pdf | awk '/^Pages:/ {print $2}')
+          test "$resume_pages" = "2"
+          test "$cover_pages" = "1"
+          pdftotext -layout docs/russell-dudek-jnj-resume.pdf /tmp/resume.txt
+          pdftotext -layout docs/russell-dudek-jnj-cover-letter.pdf /tmp/cover.txt
+          resume_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/resume.txt | wc -l)
+          cover_text_count=$(grep -o 'russelldudek.github.io/jnj/' /tmp/cover.txt | wc -l)
+          resume_url_count=$(pdfinfo -url docs/russell-dudek-jnj-resume.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
+          cover_url_count=$(pdfinfo -url docs/russell-dudek-jnj-cover-letter.pdf | grep -c 'https://russelldudek.github.io/jnj/' || true)
+          test "$resume_text_count" -ge 4
+          test "$cover_text_count" -ge 3
+          test "$resume_url_count" -ge 2
+          test "$cover_url_count" -ge 2
+          mkdir -p qa
+          cat > qa/document-vision-link-report.json <<JSON
+          {
+            "date": "$(date -u +%F)",
+            "resume": {
+              "pages": $resume_pages,
+              "vision_text_occurrences": $resume_text_count,
+              "vision_pdf_hyperlinks": $resume_url_count,
+              "header_link_on_each_page": true
+            },
+            "cover_letter": {
+              "pages": $cover_pages,
+              "vision_text_occurrences": $cover_text_count,
+              "vision_pdf_hyperlinks": $cover_url_count,
+              "header_link": true,
+              "body_link": true
+            },
+            "pass": true
+          }
+          JSON
+      - name: Commit generated documents
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/russell-dudek-jnj-resume.pdf docs/russell-dudek-jnj-cover-letter.pdf qa/document-vision-link-report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Regenerate application PDFs with vision links [skip doc-build]"
+            git push
+          fi
