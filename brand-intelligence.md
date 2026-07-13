@@ -2,7 +2,7 @@
 
 ## Campaign use
 
-This record supports the independent RoleForge candidate campaign for **Director, MedTech Digital Factory - OTC**. Company identity establishes who the work is for; the original **Order Trace** system establishes Russell Dudek's point of view. The campaign does not imply sponsorship, authorship, approval, employment, or endorsement by Johnson & Johnson.
+This record supports the independent candidate campaign for **Director, MedTech Digital Factory - OTC**. Company identity establishes who the work is for; the original **Order Trace** system establishes Russell Dudek's point of view. The campaign does not imply sponsorship, authorship, approval, employment, or endorsement by Johnson & Johnson.
 
 ## Authoritative sources
 
@@ -14,7 +14,7 @@ This record supports the independent RoleForge candidate campaign for **Director
 
 Johnson & Johnson's current public identity uses a modern red sans-serif corporate wordmark and the MedTech business name. The available connected research tools exposed the official pages but did not expose a stable, crisp standalone logo file that could be downloaded and locally committed without tracing, redrawing, extracting a restricted webfont, or relying on a third-party logo repository.
 
-Because RoleForge prohibits redrawing or approximating an official mark, this campaign uses a **clearly typeset nominative company identity** instead of a counterfeit or third-party logo asset:
+Because the campaign must not redraw or approximate an official mark, it uses a **clearly typeset nominative company identity** instead of a counterfeit or third-party logo asset:
 
 > Johnson & Johnson | MedTech  
 > Candidate vision for Director, MedTech Digital Factory - OTC  
