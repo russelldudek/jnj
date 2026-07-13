@@ -102,7 +102,7 @@
 
   if (document.querySelector('.trace-stage') && !document.querySelector('script[data-order-trace-loader]')) {
     const journeyScript = document.createElement('script');
-    journeyScript.src = 'order-trace-loader-v2.js?v=20260712-clipfix1';
+    journeyScript.src = 'order-trace-loader-v2.js?v=20260713-publicqa2';
     journeyScript.dataset.orderTraceLoader = 'true';
     document.body.appendChild(journeyScript);
   }
